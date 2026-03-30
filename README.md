@@ -24,3 +24,5 @@ Patient-side AI medication management product.
 - [core-page-specs.md](./docs/core-page-specs.md)
 - [core-page-specs.zh-CN.md](./docs/core-page-specs.zh-CN.md)
 
+
+- [decision-log.zh-CN.md](D:/MyTherapy/docs/decision-log.zh-CN.md)
