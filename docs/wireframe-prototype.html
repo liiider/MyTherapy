@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy High Fidelity Prototype</title>
+  <style>
+    :root {
+      --text: #2f231c;
+      --muted: #8a786b;
+      --line: rgba(205, 181, 159, 0.52);
+      --accent: #c46d42;
+      --accent-strong: #ab5932;
+      --accent-soft: #ffe4d0;
+      --success: #2f9469;
+      --gold: #f2bc58;
+      --shadow-lg: 0 28px 72px rgba(90, 61, 42, 0.16);
+      --shadow-md: 0 16px 36px rgba(90, 61, 42, 0.12);
+      --shadow-sm: 0 10px 24px rgba(90, 61, 42, 0.08);
+      --phone-w: 402px;
+      --phone-h: 860px;
+      --fast: 180ms;
+      --ease: cubic-bezier(.22,.86,.28,.99);
+      --font-display: "Trebuchet MS", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --font-body: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      padding: 22px;
+      color: var(--text);
+      font-family: var(--font-body);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,.72), transparent 18%),
+        radial-gradient(circle at 90% 12%, rgba(241,190,152,.20), transparent 22%),
+        linear-gradient(180deg, #fbf7f2 0%, #f4ede5 52%, #efe5db 100%);
+    }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .page { max-width: 1480px; margin: 0 auto; display: grid; grid-template-columns: 320px 1fr; gap: 24px; align-items: start; }
+    .sidebar { position: sticky; top: 22px; padding: 24px; border-radius: 30px; border: 1px solid rgba(212,193,174,.62); background: rgba(255, 251, 246, 0.9); box-shadow: var(--shadow-md); backdrop-filter: blur(18px); }
+    .brand { display: grid; gap: 8px; margin-bottom: 20px; }
+    .eyebrow { width: fit-content; padding: 7px 12px; border-radius: 999px; background: rgba(196,109,66,.12); color: var(--accent-strong); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+    .brand h1 { margin: 0; font-family: var(--font-display); font-size: 30px; line-height: 1.02; letter-spacing: -.05em; }
+    .brand p, .panel li, .panel p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .nav-list, .panel ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+    .nav-btn { width: 100%; min-height: 58px; padding: 12px 14px; border-radius: 18px; border: 1px solid rgba(212,193,174,.6); background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,249,243,.92)); color: var(--text); display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; transition: transform var(--fast) var(--ease), border-color var(--fast) var(--ease), box-shadow var(--fast) var(--ease); touch-action: manipulation; }
+    .nav-btn:hover, .nav-btn:focus-visible { transform: translateY(-1px); border-color: rgba(196,109,66,.72); box-shadow: var(--shadow-sm); outline: none; }
+    .nav-btn.active { background: linear-gradient(180deg, #fff3ea 0%, #ffe8d7 100%); border-color: rgba(196,109,66,.68); box-shadow: var(--shadow-sm); }
+    .nav-copy { display: grid; gap: 3px; min-width: 0; }
+    .nav-copy strong { font-size: 15px; }
+    .nav-copy span { font-size: 12px; color: var(--muted); line-height: 1.4; }
+    .nav-index { min-width: 34px; height: 34px; border-radius: 999px; display: grid; place-items: center; border: 1px solid rgba(212,193,174,.68); background: rgba(255,255,255,.76); color: var(--muted); font-size: 12px; }
+    .panel { margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(212,193,174,.56); display: grid; gap: 12px; }
+    .panel h2 { margin: 0; font-size: 14px; }
+    .viewer { display: grid; gap: 16px; }
+    .topbar, .viewer-note { border: 1px solid rgba(212,193,174,.64); background: rgba(255,251,246,.88); border-radius: 26px; box-shadow: var(--shadow-md); backdrop-filter: blur(18px); }
+    .topbar { padding: 16px 18px; display: flex; justify-content: space-between; gap: 16px; }
+    .topbar strong { font-size: 17px; }
+    .topbar p, .topbar-side, .viewer-note { color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .topbar p { margin: 4px 0 0; }
+    .topbar-side { text-align: right; }
+    .viewer-note { padding: 14px 16px; }
+    .phones { display: flex; flex-wrap: wrap; gap: 24px; }
+    .phone { width: min(100%, var(--phone-w)); height: var(--phone-h); display: none; overflow: hidden; position: relative; border-radius: 44px; border: 10px solid #271d17; background: linear-gradient(180deg, #fbf6f2 0%, #f7f0e8 100%); box-shadow: 0 34px 80px rgba(40,28,22,.24); }
+    .phone.active { display: block; }
+    .screen { height: 100%; position: relative; display: grid; grid-template-rows: auto 1fr auto; background: radial-gradient(circle at top right, rgba(241,190,152,.18), transparent 26%), linear-gradient(180deg, #faf5ef 0%, #f4ede6 100%); }
+    .status { height: 34px; padding: 8px 18px 0; display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: 12px; }
+    .appbar { padding: 14px 18px 10px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .appbar h3 { margin: 0; font-family: var(--font-display); font-size: 30px; line-height: 1; letter-spacing: -.05em; }
+    .appbar p { margin: 6px 0 0; color: var(--muted); font-size: 12px; line-height: 1.45; max-width: 210px; }
+    .icon-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .icon-chip { min-height: 42px; border-radius: 16px; border: 1px solid rgba(212,193,174,.65); background: rgba(255,253,249,.92); color: #5d4b40; padding: 0 12px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 8px 18px rgba(118,82,54,.06); touch-action: manipulation; }
+    .content { overflow: auto; padding: 0 16px 108px; display: grid; gap: 14px; align-content: start; scrollbar-width: none; }
+    .content::-webkit-scrollbar { display: none; }
+    .card, .task-row, .action-tile, .group-card, .metric-box, .ai-card { display: grid; gap: 12px; padding: 16px; border-radius: 24px; border: 1px solid rgba(212,193,174,.58); background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,249,243,.94)); box-shadow: var(--shadow-sm); }
+    .hero-card, .profile-card { background: linear-gradient(135deg, #fff7f1 0%, #ffe7d5 100%); border-color: rgba(220,170,130,.72); }
+    .section-title, .task-main, .task-meta, .button-row, .group-head, .group-inline, .summary-strip, .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    .section-title { color: var(--muted); font-size: 12px; padding: 0 2px; }
+    .card h4 { margin: 0; font-size: 20px; letter-spacing: -.04em; line-height: 1.15; }
+    .subcopy, .tiny, .outline-note { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+    .outline-note { padding: 14px 16px; border-radius: 18px; background: rgba(255,245,236,.92); border: 1px solid rgba(220,170,130,.56); }
+    .pill, .mini-chip { width: fit-content; padding: 6px 10px; border-radius: 999px; border: 1px solid rgba(212,193,174,.6); background: rgba(255,244,233,.92); color: #5d4b40; font-size: 11px; }
+    .mini-chip { background: rgba(255,255,255,.92); color: var(--muted); }
+    .btn-primary, .btn-secondary, .btn-ghost, .tab, .seg-btn, .floating-add { min-height: 46px; border-radius: 16px; transition: transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease), border-color var(--fast) var(--ease); touch-action: manipulation; }
+    .btn-primary:hover, .btn-secondary:hover, .btn-ghost:hover, .tab:hover, .seg-btn:hover, .icon-chip:hover, .floating-add:hover { transform: translateY(-1px); }
+    .btn-primary { border: 0; background: linear-gradient(180deg, #d77c50 0%, #bf693d 100%); color: #fff; padding: 0 16px; box-shadow: 0 14px 26px rgba(191,105,61,.26); }
+    .btn-secondary { border: 1px solid rgba(220,170,130,.68); background: linear-gradient(180deg, #fff0e3 0%, #ffe1ca 100%); color: var(--text); padding: 0 16px; }
+    .btn-ghost { border: 1px solid rgba(212,193,174,.72); background: rgba(255,255,255,.9); color: var(--text); padding: 0 16px; }
+    .bottom-nav { position: absolute; inset: auto 0 0; padding: 12px 12px 18px; background: linear-gradient(180deg, rgba(245,238,231,0) 0%, rgba(245,238,231,.88) 25%, rgba(245,238,231,.98) 100%); }
+    .bottom-nav-inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 10px; border-radius: 24px; border: 1px solid rgba(212,193,174,.62); background: rgba(255,252,248,.97); box-shadow: 0 10px 24px rgba(118,82,54,.08); }
+    .tab { border: 0; background: transparent; color: var(--muted); min-height: 60px; display: grid; place-items: center; gap: 6px; font-size: 11px; }
+    .tab.active { background: linear-gradient(180deg, #fff0e3 0%, #ffe0ca 100%); color: var(--text); box-shadow: 0 10px 18px rgba(191,105,61,.1); }
+    .floating-add { position: absolute; right: 18px; bottom: 98px; min-width: 60px; width: 60px; padding: 0; border: 1px solid rgba(220,170,130,.72); border-radius: 999px; background: linear-gradient(180deg, #fff3e7 0%, #ffdcbc 100%); color: var(--text); box-shadow: 0 20px 32px rgba(191,105,61,.2); display: grid; place-items: center; }
+    .segment { width: fit-content; display: inline-flex; gap: 8px; padding: 6px; border-radius: 999px; border: 1px solid rgba(212,193,174,.58); background: rgba(255,250,245,.88); box-shadow: 0 8px 18px rgba(118,82,54,.06); }
+    .seg-btn { min-width: 74px; border: 1px solid rgba(212,193,174,.6); border-radius: 999px; background: rgba(255,255,255,.92); color: var(--muted); padding: 0 14px; }
+    .seg-btn.active { background: linear-gradient(180deg, #fff0e3 0%, #ffe2cd 100%); color: var(--text); border-color: rgba(220,170,130,.7); box-shadow: 0 8px 16px rgba(191,105,61,.12); }
+    .progress-panel { display: none; gap: 14px; }
+    .progress-panel.active { display: grid; }
+    .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+    .day-chip { display: grid; justify-items: center; gap: 4px; padding: 6px 2px; border-radius: 14px; border: 1px solid transparent; background: transparent; color: var(--muted); font-size: 10px; }
+    .day-chip strong { font-size: 15px; color: var(--text); font-weight: 600; }
+    .day-chip.current { background: linear-gradient(180deg, #fff5ee 0%, #ffe8d7 100%); border-color: rgba(196,109,66,.42); }
+    .dot { width: 5px; height: 5px; border-radius: 999px; background: var(--accent); opacity: .8; }
+    .ico, .tab-ico { width: 18px; height: 18px; display: inline-block; color: currentColor; }
+    .tab-ico { width: 20px; height: 20px; }
+    .ico-badge { width: 38px; height: 38px; border-radius: 14px; display: grid; place-items: center; background: rgba(255,239,226,.88); color: var(--accent-strong); border: 1px solid rgba(220,170,130,.56); flex: 0 0 auto; }
+    .ico-badge.soft-green { background: rgba(231,247,239,.9); color: var(--success); border-color: rgba(47,148,105,.22); }
+    .ico-badge.soft-gold { background: rgba(255,245,220,.92); color: #b67b12; border-color: rgba(242,188,88,.36); }
+    .task-row { grid-template-columns: 38px 1fr auto; align-items: center; gap: 12px; padding: 14px; }
+    .task-copy { display: grid; gap: 4px; }
+    .task-copy strong { font-size: 15px; }
+    .task-time { font-weight: 700; color: var(--text); font-size: 14px; }
+    .task-check { width: 24px; height: 24px; border-radius: 999px; border: 2px solid rgba(47,148,105,.5); color: var(--success); display: grid; place-items: center; }
+    .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .action-tile { gap: 8px; align-content: start; min-height: 112px; }
+    .action-tile strong { font-size: 14px; }
+    .chat-bubble { max-width: 88%; padding: 12px 14px; border-radius: 18px; border: 1px solid rgba(212,193,174,.58); font-size: 13px; line-height: 1.55; }
+    .chat-bubble.user { margin-left: auto; background: linear-gradient(180deg,#fff0e3 0%,#ffe1ca 100%); }
+    .chat-bubble.ai { background: rgba(255,255,255,.94); }
+    .group-card { gap: 10px; }
+    .group-head strong { font-size: 16px; }
+    .quick-list, .ledger-day { display: grid; gap: 10px; }
+    .metric-strip { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .metric-box { gap: 4px; }
+    .metric-box strong { font-size: 24px; }
+    .month-sheet { display: none; position: absolute; inset: 0; align-items: end; background: rgba(33,23,18,.24); backdrop-filter: blur(3px); z-index: 30; }
+    .month-sheet.open { display: flex; }
+    .sheet-card { width: 100%; display: grid; gap: 14px; padding: 14px 18px 24px; border-radius: 28px 28px 0 0; border-top: 1px solid rgba(212,193,174,.7); background: linear-gradient(180deg, #fffdfa 0%, #fff7f1 100%); box-shadow: 0 -18px 48px rgba(40,28,22,.16); }
+    .sheet-handle { width: 42px; height: 5px; border-radius: 999px; background: rgba(141,125,114,.26); margin: 0 auto; }
+    .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; font-size: 12px; color: var(--muted); }
+    .month-cell { aspect-ratio: 1 / 1; display: grid; place-items: center; border-radius: 18px; border: 1px solid rgba(212,193,174,.48); background: rgba(255,255,255,.88); }
+    .month-cell.current { color: #fff; border-color: rgba(191,105,61,.85); background: linear-gradient(180deg, #d77c50 0%, #bf693d 100%); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    @media (max-width: 1120px) { .page { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    @media (max-width: 640px) { body { padding: 12px; } .phone { width: 100%; max-width: 100%; height: 840px; } }
+  </style>
+</head>
+<body>
+  <svg class="sr-only" aria-hidden="true" focusable="false">
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M7 3v3M17 3v3M4 8h16M5 5h14a1 1 0 0 1 1 1v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a1 1 0 0 1 1-1Z"/></symbol>
+    <symbol id="i-pill" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M9.5 4.5a5 5 0 0 1 7.1 0l2.9 2.9a5 5 0 0 1 0 7.1l-5.1 5.1a5 5 0 0 1-7.1 0l-2.9-2.9a5 5 0 0 1 0-7.1zM9 15l6-6"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 19h16M7 16V9M12 16V5M17 16v-3"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8L12 2Z"/><path fill="currentColor" d="M19 14l.8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14Z"/><path fill="currentColor" d="M5 14l.8 2.2L8 17l-2.2.8L5 20l-.8-2.2L2 17l2.2-.8L5 14Z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm-7 8a7 7 0 0 1 14 0"/></symbol>
+    <symbol id="i-measure" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M6 4h12l2 5-8 11L4 9l2-5Z"/><path fill="none" stroke="currentColor" stroke-width="1.8" d="M9 9h6"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 13h4l2-5 4 10 2-5h6"/></symbol>
+    <symbol id="i-mood" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M8.5 14.5a5 5 0 0 0 7 0M9 10h.01M15 10h.01"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l1.5-2h7L17 7h3v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m5 12 4.2 4.2L19 6.5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 16V5m0 0-4 4m4-4 4 4M5 19h14"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="m9 6 6 6-6 6"/></symbol>
+  </svg>
+  <div class="page">
+    <aside class="sidebar">
+      <div class="brand"><span class="eyebrow">UI Refresh</span><h1>MyTherapy</h1><p>按竞品的低密度、强图标、轻医疗感重做视觉表达，保留你已经确认的业务结构。</p></div>
+      <ul class="nav-list">
+        <li><button class="nav-btn active" data-screen="today"><span class="nav-copy"><strong>今日</strong><span>日历 + 打卡</span></span><span class="nav-index">01</span></button></li>
+        <li><button class="nav-btn" data-screen="progress"><span class="nav-copy"><strong>进展</strong><span>总结 + 列表</span></span><span class="nav-index">02</span></button></li>
+        <li><button class="nav-btn" data-screen="ai"><span class="nav-copy"><strong>AI</strong><span>OCR + 对话</span></span><span class="nav-index">03</span></button></li>
+        <li><button class="nav-btn" data-screen="me"><span class="nav-copy"><strong>我的</strong><span>疗程管理优先</span></span><span class="nav-index">04</span></button></li>
+        <li><button class="nav-btn" data-screen="therapy"><span class="nav-copy"><strong>我的疗程</strong><span>4 类规则</span></span><span class="nav-index">05</span></button></li>
+        <li><button class="nav-btn" data-screen="ocr"><span class="nav-copy"><strong>OCR 结果确认</strong><span>人工校对</span></span><span class="nav-index">06</span></button></li>
+      </ul>
+    </aside>
+    <main class="viewer">
+      <div class="topbar"><div><strong>wireframe-prototype.html</strong><p>当前目标是把视觉表达拉准，再进入正式前端。</p></div><div class="topbar-side">设计参考：竞品轻医疗风格<br />编码执行：5.3-codex</div></div>
+      <div class="viewer-note">左侧切换页面。今日可打开月历，进展可切换总结和列表。</div>
+      <div class="phones">
+        <section class="phone active" id="screen-today">
+          <div class="screen">
+            <div><div class="status"><span>9:41</span><span>5G · 76%</span></div><div class="appbar"><div><h3>今日</h3></div><div class="icon-row"><button class="icon-chip js-open-month" aria-label="打开月历"><svg class="ico"><use href="#i-calendar"></use></svg></button></div></div></div>
+            <div class="content">
+              <article class="card" style="padding:12px 14px; gap:10px;"><div class="section-title"><span>3月30日</span><span>周一</span></div><div class="week-grid"><div class="day-chip"><span>五</span><strong>28</strong><span class="dot"></span></div><div class="day-chip"><span>六</span><strong>29</strong><span class="dot"></span></div><div class="day-chip current"><span>今</span><strong>30</strong><span class="dot"></span></div><div class="day-chip"><span>二</span><strong>31</strong><span class="dot"></span></div><div class="day-chip"><span>三</span><strong>1</strong><span class="dot"></span></div><div class="day-chip"><span>四</span><strong>2</strong><span class="dot"></span></div><div class="day-chip"><span>五</span><strong>3</strong><span class="dot"></span></div></div></article>
+              <article class="card hero-card" style="padding:14px 16px;"><div class="summary-strip"><span class="pill">下一项</span><span class="mini-chip">08:30</span></div><div class="task-main"><div class="group-inline"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div><h4>补剂</h4><p class="subcopy">饭后 1 药片</p></div></div><button class="btn-primary">服药</button></div></article>
+              <div class="section-title"><span>待完成</span><span>4</span></div>
+              <article class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>补剂</strong><div class="task-meta"><span class="mini-chip">饭后</span><span class="mini-chip">OCR</span></div></div><div class="task-time">08:30</div></article>
+              <article class="task-row"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span><div class="task-copy"><strong>午间情绪</strong><div class="task-meta"><span class="mini-chip">自查</span><span class="mini-chip">1 分钟</span></div></div><div class="task-time">12:30</div></article>
+              <article class="task-row"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-spark"></use></svg></span><div class="task-copy"><strong>副作用自查</strong><div class="task-meta"><span class="mini-chip">恶心</span><span class="mini-chip">胃痛</span></div></div><div class="task-time">20:00</div></article>
+              <article class="task-row"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-measure"></use></svg></span><div class="task-copy"><strong>睡前体重</strong><div class="task-meta"><span class="mini-chip">测量</span><span class="mini-chip">同步进展</span></div></div><div class="task-time">21:30</div></article>
+              <article class="card" style="padding:14px 16px;"><div class="section-title"><span>已完成</span><span>1 项</span></div><article class="task-row" style="padding:12px 0 0; border:0; box-shadow:none; background:transparent;"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-activity"></use></svg></span><div class="task-copy"><strong>晨间散步</strong><div class="task-meta"><span class="mini-chip">10 分钟</span></div></div><span class="task-check"><svg class="ico"><use href="#i-check"></use></svg></span></article></article>
+            </div>
+            <button class="floating-add"><svg class="ico"><use href="#i-plus"></use></svg></button>
+            <div class="bottom-nav"><div class="bottom-nav-inner"><button class="tab active"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></button><button class="tab"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></button><button class="tab"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></button><button class="tab"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></button></div></div>
+            <div class="month-sheet" id="monthSheet"><div class="sheet-card"><div class="sheet-handle"></div><div class="row"><strong style="font-size:19px;">2026 年 3 月</strong><button class="btn-ghost" id="closeMonthSheet">关闭</button></div><div class="month-grid"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span><div class="month-cell">23</div><div class="month-cell">24</div><div class="month-cell">25</div><div class="month-cell">26</div><div class="month-cell">27</div><div class="month-cell">28</div><div class="month-cell">1</div><div class="month-cell">2</div><div class="month-cell">3</div><div class="month-cell">4</div><div class="month-cell">5</div><div class="month-cell">6</div><div class="month-cell">7</div><div class="month-cell">8</div><div class="month-cell">9</div><div class="month-cell">10</div><div class="month-cell">11</div><div class="month-cell">12</div><div class="month-cell">13</div><div class="month-cell">14</div><div class="month-cell">15</div><div class="month-cell">16</div><div class="month-cell">17</div><div class="month-cell">18</div><div class="month-cell">19</div><div class="month-cell">20</div><div class="month-cell">21</div><div class="month-cell">22</div><div class="month-cell">23</div><div class="month-cell">24</div><div class="month-cell">25</div><div class="month-cell">26</div><div class="month-cell">27</div><div class="month-cell">28</div><div class="month-cell">29</div><div class="month-cell current">30</div><div class="month-cell">31</div><div class="month-cell">1</div><div class="month-cell">2</div><div class="month-cell">3</div><div class="month-cell">4</div><div class="month-cell">5</div><div class="month-cell">6</div></div><div class="outline-note">点击日期后回到当日任务视图。</div></div></div>
+          </div>
+        </section>
+        <section class="phone" id="screen-progress"><div class="screen"><div><div class="status"><span>9:41</span><span>5G · 76%</span></div><div class="appbar"><div><h3>进展</h3><p>总结看趋势，列表看记录</p></div></div></div><div class="content"><div class="segment"><button class="seg-btn active" data-progress="summary">总结</button><button class="seg-btn" data-progress="list">列表</button></div><div class="progress-panel active" id="progress-summary"><div class="metric-strip"><article class="metric-box"><div class="group-inline"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-check"></use></svg></span><span class="tiny">完成率</span></div><strong>86%</strong></article><article class="metric-box"><div class="group-inline"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-spark"></use></svg></span><span class="tiny">连续</span></div><strong>5 天</strong></article></div><article class="card"><div class="section-title"><span>7 天趋势</span><span>Summary</span></div><div style="height:124px;border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,.22)),repeating-linear-gradient(90deg,transparent 0,transparent 12%,rgba(212,193,174,.24) 12.5%,transparent 13.5%),linear-gradient(180deg,rgba(247,217,197,.24),transparent 100%);position:relative;overflow:hidden;border:1px solid rgba(212,193,174,.52)"><div style="position:absolute;inset:auto 12px 14px;display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end;height:84px;"><div style="height:58px;border-radius:14px 14px 10px 10px;background:linear-gradient(180deg,#df8f62 0%,#be693d 100%);"></div><div style="height:72px;border-radius:14px 14px 10px 10px;background:linear-gradient(180deg,#df8f62 0%,#be693d 100%);"></div><div style="height:54px;border-radius:14px 14px 10px 10px;background:linear-gradient(180deg,#e8c5ae 0%,#d89c77 100%);"></div><div style="height:64px;border-radius:14px 14px 10px 10px;background:linear-gradient(180deg,#df8f62 0%,#be693d 100%);"></div><div style="height:47px;border-radius:14px 14px 10px 10px;background:linear-gradient(180deg,#e8c5ae 0%,#d89c77 100%);"></div><div style="height:76px;border-radius:14px 14px 10px 10px;background:linear-gradient(180deg,#df8f62 0%,#be693d 100%);"></div><div style="height:70px;border-radius:14px 14px 10px 10px;background:linear-gradient(180deg,#df8f62 0%,#be693d 100%);"></div></div></div></article><article class="card"><div class="section-title"><span>分类表现</span><span>4 类</span></div><div class="quick-list"><div class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>药物</strong><div class="task-meta"><span class="mini-chip">稳定</span></div></div><div class="task-time">92%</div></div><div class="task-row"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-measure"></use></svg></span><div class="task-copy"><strong>测量</strong><div class="task-meta"><span class="mini-chip">良好</span></div></div><div class="task-time">80%</div></div><div class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-activity"></use></svg></span><div class="task-copy"><strong>活动</strong><div class="task-meta"><span class="mini-chip">可提升</span></div></div><div class="task-time">74%</div></div><div class="task-row"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span><div class="task-copy"><strong>情绪和症状</strong><div class="task-meta"><span class="mini-chip">夜间易漏</span></div></div><div class="task-time">67%</div></div></div></article></div><div class="progress-panel" id="progress-list"><article class="card"><div class="section-title"><span>每日流水</span><span>近 3 天</span></div><div class="ledger-day"><article class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>2026/03/30</strong><div class="task-meta"><span class="mini-chip">补剂</span><span class="mini-chip">情绪</span><span class="mini-chip">体重</span></div></div><div class="task-time">4 条</div></article><article class="task-row"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-check"></use></svg></span><div class="task-copy"><strong>2026/03/29</strong><div class="task-meta"><span class="mini-chip">已服</span><span class="mini-chip">无明显不适</span></div></div><div class="task-time">3 条</div></article><article class="task-row"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span><div class="task-copy"><strong>2026/03/28</strong><div class="task-meta"><span class="mini-chip">情绪缺失</span><span class="mini-chip">可补录</span></div></div><div class="task-time">2 条</div></article></div></article></div></div><div class="bottom-nav"><div class="bottom-nav-inner"><button class="tab"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></button><button class="tab active"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></button><button class="tab"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></button><button class="tab"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></button></div></div></div></section>
+        <section class="phone" id="screen-ai"><div class="screen"><div><div class="status"><span>9:41</span><span>5G · 76%</span></div><div class="appbar"><div><h3>AI</h3><p>OCR、输入、表达</p></div><div class="icon-row"><button class="icon-chip"><svg class="ico"><use href="#i-spark"></use></svg></button></div></div></div><div class="content"><div class="action-grid"><article class="action-tile"><span class="ico-badge"><svg class="ico"><use href="#i-camera"></use></svg></span><strong>扫描医嘱</strong><span class="tiny">生成规则</span></article><article class="action-tile"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><strong>识别药单</strong><span class="tiny">导入药物</span></article><article class="action-tile"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span><strong>记录不适</strong><span class="tiny">症状转记录</span></article><article class="action-tile"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-plus"></use></svg></span><strong>新增提醒</strong><span class="tiny">一句话生成</span></article></div><div style="display:grid;gap:10px;"><div class="chat-bubble user">医生说这个补剂每天早上饭后吃一片，我最近晚上会有点恶心。</div><div class="chat-bubble ai">我整理成 2 条：补剂规则、晚间副作用自查。</div></div><article class="ai-card"><div class="section-title"><span>AI 建议</span><span>待确认</span></div><article class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>补剂</strong><div class="task-meta"><span class="mini-chip">08:30</span><span class="mini-chip">饭后</span></div></div><div class="task-time">规则</div></article><article class="task-row"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-spark"></use></svg></span><div class="task-copy"><strong>晚间副作用</strong><div class="task-meta"><span class="mini-chip">20:00</span><span class="mini-chip">恶心</span></div></div><div class="task-time">规则</div></article><div class="button-row"><button class="btn-primary">保存</button><button class="btn-ghost">仅今天</button></div></article><div class="card" style="padding:12px;"><textarea style="width:100%;min-height:88px;resize:none;border:0;background:transparent;outline:none;color:var(--text);line-height:1.6;" placeholder="输入医嘱、感受，或拍照上传..."></textarea><div class="button-row"><button class="btn-ghost"><svg class="ico"><use href="#i-upload"></use></svg></button><button class="btn-primary">发送</button></div></div></div><div class="bottom-nav"><div class="bottom-nav-inner"><button class="tab"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></button><button class="tab"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></button><button class="tab active"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></button><button class="tab"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></button></div></div></div></section>
+        <section class="phone" id="screen-me"><div class="screen"><div><div class="status"><span>9:41</span><span>5G · 76%</span></div><div class="appbar"><div><h3>我的</h3><p>疗程管理优先</p></div></div></div><div class="content"><article class="card profile-card"><div class="group-inline"><span class="ico-badge"><svg class="ico"><use href="#i-user"></use></svg></span><div><h4>lider</h4><p class="subcopy">先把疗程规则管清楚</p></div></div><div class="button-row"><button class="btn-primary">进入疗程</button></div></article><article class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-calendar"></use></svg></span><div class="task-copy"><strong>疗程管理</strong><div class="task-meta"><span class="mini-chip">核心入口</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></article><article class="task-row"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-clock"></use></svg></span><div class="task-copy"><strong>提醒与通知</strong><div class="task-meta"><span class="mini-chip">后续补充</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></article><article class="task-row"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-user"></use></svg></span><div class="task-copy"><strong>账号与资料</strong><div class="task-meta"><span class="mini-chip">后续补充</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></article><article class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-spark"></use></svg></span><div class="task-copy"><strong>帮助与反馈</strong><div class="task-meta"><span class="mini-chip">后续补充</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></article></div><div class="bottom-nav"><div class="bottom-nav-inner"><button class="tab"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></button><button class="tab"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></button><button class="tab"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></button><button class="tab active"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></button></div></div></div></section>
+        <section class="phone" id="screen-therapy"><div class="screen"><div><div class="status"><span>9:41</span><span>5G · 76%</span></div><div class="appbar"><div><h3>我的疗程</h3><p>规则管理</p></div><div class="icon-row"><button class="icon-chip"><svg class="ico"><use href="#i-plus"></use></svg></button></div></div></div><div class="content"><article class="group-card"><div class="group-head"><div class="group-inline"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><strong>药物</strong></div><span class="mini-chip">2 条</span></div><article class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>补剂</strong><div class="task-meta"><span class="mini-chip">08:30</span><span class="mini-chip">OCR</span><span class="mini-chip">启用中</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></article><article class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>备用胃药</strong><div class="task-meta"><span class="mini-chip">按需</span><span class="mini-chip">暂停</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></article></article><article class="group-card"><div class="group-head"><div class="group-inline"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-measure"></use></svg></span><strong>测量</strong></div><span class="mini-chip">1 条</span></div><article class="task-row"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-measure"></use></svg></span><div class="task-copy"><strong>晚间体重</strong><div class="task-meta"><span class="mini-chip">21:30</span><span class="mini-chip">启用中</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></article></article><article class="group-card"><div class="group-head"><div class="group-inline"><span class="ico-badge"><svg class="ico"><use href="#i-activity"></use></svg></span><strong>活动</strong></div><span class="mini-chip">1 条</span></div><article class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-activity"></use></svg></span><div class="task-copy"><strong>晨间散步</strong><div class="task-meta"><span class="mini-chip">07:10</span><span class="mini-chip">今日沉淀</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></article></article><article class="group-card"><div class="group-head"><div class="group-inline"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span><strong>情绪和症状</strong></div><span class="mini-chip">2 条</span></div><article class="task-row"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span><div class="task-copy"><strong>午间情绪</strong><div class="task-meta"><span class="mini-chip">12:30</span><span class="mini-chip">AI</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></article><article class="task-row"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-spark"></use></svg></span><div class="task-copy"><strong>晚间副作用</strong><div class="task-meta"><span class="mini-chip">20:00</span><span class="mini-chip">AI</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></article></article></div><div class="bottom-nav"><div class="bottom-nav-inner"><button class="tab"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></button><button class="tab"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></button><button class="tab"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></button><button class="tab active"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></button></div></div></div></section>
+        <section class="phone" id="screen-ocr"><div class="screen"><div><div class="status"><span>9:41</span><span>5G · 76%</span></div><div class="appbar"><div><h3>OCR 确认</h3><p>识别结果需人工确认</p></div></div></div><div class="content"><article class="card hero-card"><div class="group-inline"><span class="ico-badge"><svg class="ico"><use href="#i-camera"></use></svg></span><div><h4>医嘱截图</h4><p class="subcopy">已生成规则草稿</p></div></div></article><article class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>补剂</strong><div class="task-meta"><span class="mini-chip">药名</span></div></div><span class="task-time">确认</span></article><article class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>1 药片</strong><div class="task-meta"><span class="mini-chip">剂量</span></div></div><span class="task-time">确认</span></article><article class="task-row" style="border-color:rgba(193,100,77,.5); background:rgba(255,242,239,.96);"><span class="ico-badge"><svg class="ico"><use href="#i-clock"></use></svg></span><div class="task-copy"><strong>每天 1 次</strong><div class="task-meta"><span class="mini-chip">低置信度</span></div></div><span class="task-time">频次</span></article><article class="task-row"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-clock"></use></svg></span><div class="task-copy"><strong>08:30 · 饭后</strong><div class="task-meta"><span class="mini-chip">时间建议</span></div></div><span class="task-time">确认</span></article><article class="card"><div class="section-title"><span>风险提示</span><span>1 项</span></div><p class="subcopy">“每天 1 次” 这项可能来自模糊文字，建议你手动确认。需要的话可同步生成晚间副作用自查规则。</p></article><div class="button-row"><button class="btn-primary">保存</button><button class="btn-secondary">编辑</button><button class="btn-ghost">稍后</button></div></div><div class="bottom-nav"><div class="bottom-nav-inner"><button class="tab"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></button><button class="tab"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></button><button class="tab active"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></button><button class="tab"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></button></div></div></div></section>
+      </div>
+    </main>
+  </div>
+  <script>
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const screens = document.querySelectorAll('.phone');
+    function showScreen(name) {
+      navButtons.forEach((button) => button.classList.toggle('active', button.dataset.screen === name));
+      screens.forEach((screen) => screen.classList.toggle('active', screen.id === 'screen-' + name));
+    }
+    navButtons.forEach((button) => button.addEventListener('click', () => showScreen(button.dataset.screen)));
+    const monthSheet = document.getElementById('monthSheet');
+    const closeMonthSheet = document.getElementById('closeMonthSheet');
+    document.querySelectorAll('.js-open-month').forEach((trigger) => trigger.addEventListener('click', () => monthSheet.classList.add('open')));
+    closeMonthSheet.addEventListener('click', () => monthSheet.classList.remove('open'));
+    monthSheet.addEventListener('click', (event) => { if (event.target === monthSheet) monthSheet.classList.remove('open'); });
+    const progressButtons = document.querySelectorAll('[data-progress]');
+    const progressPanels = document.querySelectorAll('.progress-panel');
+    progressButtons.forEach((button) => button.addEventListener('click', () => { const mode = button.dataset.progress; progressButtons.forEach((item) => item.classList.toggle('active', item === button)); progressPanels.forEach((panel) => panel.classList.toggle('active', panel.id === 'progress-' + mode)); }));
+  </script>
+</body>
+</html>
+
+
