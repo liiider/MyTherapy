@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy 原型 v2 - 进展与导出</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="progress">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>5G 76%</span></div>
+        <header class="appbar">
+          <div class="page-actions">
+            <a class="back-link nav-link" data-icon="home" href="./today.html">返回今日</a>
+            <a class="top-chip chip-link" data-icon="pill" href="./task-detail.html">任务详情</a>
+          </div>
+          <h1>进展</h1>
+          <p>看趋势、查记录，再导出复诊资料。</p>
+        </header>
+        <div class="content">
+          <article class="card">
+            <div class="section-head">
+              <span class="eyebrow" data-icon="trend">分段</span>
+              <span class="pill">3 段</span>
+            </div>
+            <div class="grid-3">
+              <button class="tab active" data-switch-group="progress" data-switch-target="summary">总结</button>
+              <button class="tab" data-switch-group="progress" data-switch-target="history">历史</button>
+              <button class="tab" data-switch-group="progress" data-switch-target="export">导出</button>
+            </div>
+          </article>
+
+          <div class="panel active" data-panel-group="progress" data-panel-target="summary">
+            <article class="card">
+              <div class="section-head">
+                <span class="eyebrow" data-icon="trend">总结</span>
+                <span class="tag tag-success">Record 聚合</span>
+              </div>
+              <div class="grid-2">
+                <div class="metric">
+                  <span class="muted">完成率</span>
+                  <strong>86%</strong>
+                </div>
+                <div class="metric">
+                  <span class="muted">连续天数</span>
+                  <strong>5 天</strong>
+                </div>
+              </div>
+              <div class="list">
+                <div class="list-item">
+                  <div class="row"><strong>药物</strong><span class="tag">92%</span></div>
+                  <p class="muted">最近 7 天无连续漏服。</p>
+                </div>
+                <div class="list-item">
+                  <div class="row"><strong>情绪和症状</strong><span class="tag tag-warn">67%</span></div>
+                  <p class="muted">夜间副作用记录不稳定。</p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="panel" data-panel-group="progress" data-panel-target="history">
+            <article class="card">
+              <div class="section-head">
+                <span class="eyebrow" data-icon="clock">历史</span>
+                <span class="tag">按日期分组</span>
+              </div>
+              <div class="list">
+                <a class="list-item nav-link" href="./task-detail.html">
+                  <div class="row"><strong>2026-03-30</strong><span class="tag">4 条</span></div>
+                  <p class="muted">补剂已服，午间情绪待补录。</p>
+                </a>
+                <div class="list-item">
+                  <div class="row"><strong>2026-03-29</strong><span class="tag tag-success">3 条</span></div>
+                  <p class="muted">补剂已服，无明显不适。</p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="panel" data-panel-group="progress" data-panel-target="export">
+            <article class="card">
+              <div class="section-head">
+                <span class="eyebrow" data-icon="save">导出</span>
+                <span class="tag tag-brand">Export Report</span>
+              </div>
+              <div class="field-list">
+                <div class="field">
+                  <label>时间范围</label>
+                  <div class="value">近 30 天</div>
+                </div>
+                <div class="field">
+                  <label>导出内容</label>
+                  <div class="value">用药、症状、情绪、体重、规则概览</div>
+                </div>
+                <div class="field">
+                  <label>输出格式</label>
+                  <div class="value">PDF 复诊资料</div>
+                </div>
+              </div>
+              <div class="button-row">
+                <button class="btn" data-icon="save" data-result="export-success">生成报告</button>
+                <button class="btn-ghost" data-icon="trend" data-result="export-preview">预览内容</button>
+              </div>
+              <div class="result-banner" id="export-success" hidden>已生成复诊资料，内容来源于 Record 聚合，并附带当前 Rule 概览。</div>
+              <div class="result-banner warn" id="export-preview" hidden>预览态会先展示时间范围、内容选择和示例摘要，再决定是否导出。</div>
+            </article>
+          </div>
+        </div>
+        <footer class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab tab-link" data-page-link="today" href="./today.html">今日</a>
+            <a class="tab tab-link" data-page-link="progress" href="./progress-export.html">进展</a>
+            <a class="tab tab-link" data-page-link="ai" href="./ai-suggestions.html">AI</a>
+            <a class="tab tab-link" data-page-link="me" href="./my.html">我的</a>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>

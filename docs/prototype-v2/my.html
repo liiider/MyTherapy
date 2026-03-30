@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy 原型 v2 - 我的</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="me">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>5G 76%</span></div>
+        <header class="appbar">
+          <div class="page-actions">
+            <span class="top-chip" data-icon="user">账户</span>
+            <a class="top-chip chip-link" data-icon="pill" href="./therapy-rules.html">我的疗程</a>
+          </div>
+          <h1>我的</h1>
+          <p>账户、通知和数据状态都收在这里，疗程仍然是主入口。</p>
+        </header>
+        <div class="content">
+          <article class="card hero-card">
+            <div class="section-head">
+              <span class="eyebrow" data-icon="user">概览</span>
+              <span class="pill">本周</span>
+            </div>
+            <h2>lider</h2>
+            <p class="muted">启用规则 5 条，今日剩余 4 项任务。</p>
+          </article>
+
+          <a class="card nav-link" href="./therapy-rules.html">
+            <div class="section-head">
+              <span class="eyebrow">核心入口</span>
+              <span class="tag tag-brand">高优先级</span>
+            </div>
+            <div class="list-item" style="padding:0; box-shadow:none; border:0; background:transparent;">
+              <div class="row"><strong>我的疗程</strong><span class="tag">5 条规则</span></div>
+              <p class="muted">管理长期规则、库存和来源标签。</p>
+            </div>
+          </a>
+
+          <article class="card">
+            <div class="section-head">
+              <span class="eyebrow" data-icon="alert">提醒与通知</span>
+              <span class="tag tag-danger">异常</span>
+            </div>
+            <p class="muted">最近 24 小时提醒成功率偏低。</p>
+            <div class="button-row">
+              <button class="btn-secondary" data-icon="alert" data-result="notice-check">检查通知权限</button>
+              <button class="btn-ghost" data-icon="trend" data-result="notice-detail">查看详情</button>
+            </div>
+            <div class="result-banner warn" id="notice-check" hidden>需要检查系统通知、后台刷新和电池优化限制，确保提醒可靠送达。</div>
+            <div class="result-banner" id="notice-detail" hidden>这里应展开最近提醒成功率、失败时间段和建议处理动作。</div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <span class="eyebrow" data-icon="save">数据与备份</span>
+              <span class="tag tag-success">正常</span>
+            </div>
+            <p class="muted">最近同步今天 08:10，上次导出 7 天前。</p>
+            <div class="button-row">
+              <a class="btn-ghost nav-link" data-icon="save" href="./progress-export.html">去导出</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <span class="eyebrow" data-icon="ai">帮助与反馈</span>
+              <span class="tag">低频入口</span>
+            </div>
+            <p class="muted">帮助中心、问题反馈和 AI 帮助。</p>
+            <div class="button-row">
+              <a class="btn-ghost nav-link" data-icon="ai" href="./ai-suggestions.html">打开 AI 帮助</a>
+            </div>
+          </article>
+        </div>
+        <footer class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab tab-link" data-page-link="today" href="./today.html">今日</a>
+            <a class="tab tab-link" data-page-link="progress" href="./progress-export.html">进展</a>
+            <a class="tab tab-link" data-page-link="ai" href="./ai-suggestions.html">AI</a>
+            <a class="tab tab-link" data-page-link="me" href="./my.html">我的</a>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>

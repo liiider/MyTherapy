@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy 原型 v2 - AI 建议</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="ai">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>5G 76%</span></div>
+        <header class="appbar">
+          <div class="page-actions">
+            <a class="back-link nav-link" data-icon="home" href="./today.html">返回今日</a>
+            <a class="top-chip chip-link" data-icon="scan" href="./ocr-review.html">去 OCR</a>
+          </div>
+          <h1>AI</h1>
+          <p>AI 只做三类输出：规则、一次性任务、记录。</p>
+        </header>
+        <div class="content">
+          <article class="card hero-card">
+            <div class="section-head">
+              <span class="eyebrow" data-icon="ai">输入区</span>
+              <span class="pill">文本 / 图片</span>
+            </div>
+            <textarea class="textarea">医生说这个补剂每天早上饭后吃一片。我最近晚上会有点恶心。另外提醒我今晚 9 点补水。</textarea>
+            <div class="button-row">
+              <a class="btn-ghost nav-link" data-icon="upload" href="./ocr-review.html">上传图片</a>
+              <button class="btn" data-icon="ai" data-result="ai-structured">发送</button>
+            </div>
+            <div class="result-banner" id="ai-structured" hidden>自然语言已转成结构化建议：长期规则 2 条，一次性任务 1 条，记录建议 1 条。</div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <span class="eyebrow" data-icon="pill">长期规则建议</span>
+              <span class="tag tag-brand">保存后进入我的疗程</span>
+            </div>
+              <div class="list">
+                <div class="list-item">
+                  <div class="row"><strong>补剂</strong><span class="tag">规则</span></div>
+                  <p class="muted">08:30 · 饭后 1 片</p>
+                </div>
+                <div class="list-item">
+                  <div class="row"><strong>晚间副作用自查</strong><span class="tag">规则</span></div>
+                  <p class="muted">20:00 · 恶心自查</p>
+                </div>
+              </div>
+            <div class="button-row">
+              <a class="btn nav-link" data-icon="save" href="./therapy-rules.html">保存为长期规则</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <span class="eyebrow" data-icon="clock">一次性任务建议</span>
+              <span class="tag tag-warn">仅进入今日</span>
+            </div>
+            <div class="list-item">
+              <div class="row"><strong>今晚 9 点补水提醒</strong><span class="tag tag-warn">一次性任务</span></div>
+              <p class="muted">21:00 · 不进入我的疗程</p>
+            </div>
+            <div class="button-row">
+              <a class="btn-secondary nav-link" data-icon="clock" href="./today.html">仅今天</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <span class="eyebrow" data-icon="trend">记录建议</span>
+              <span class="tag tag-success">直接生成 Record</span>
+            </div>
+            <div class="list-item">
+              <div class="row"><strong>记录今晚恶心感受</strong><span class="tag tag-success">记录建议</span></div>
+              <p class="muted">直接转成一条症状记录。</p>
+            </div>
+            <div class="button-row">
+              <a class="btn-ghost nav-link" data-icon="trend" href="./progress-export.html">转成记录</a>
+            </div>
+          </article>
+        </div>
+        <footer class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab tab-link" data-page-link="today" href="./today.html">今日</a>
+            <a class="tab tab-link" data-page-link="progress" href="./progress-export.html">进展</a>
+            <a class="tab tab-link" data-page-link="ai" href="./ai-suggestions.html">AI</a>
+            <a class="tab tab-link" data-page-link="me" href="./my.html">我的</a>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>

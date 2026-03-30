@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy 原型 v2 - OCR 确认</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="ai">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>5G 76%</span></div>
+        <header class="appbar">
+          <div class="page-actions">
+            <a class="back-link nav-link" data-icon="ai" href="./ai-suggestions.html">返回 AI</a>
+            <a class="top-chip chip-link" data-icon="save" href="./therapy-rules.html">保存结果</a>
+          </div>
+          <h1>OCR 确认</h1>
+          <p>先核对草稿，再决定保存或稍后处理。</p>
+        </header>
+        <div class="content">
+          <article class="card hero-card">
+            <div class="section-head">
+              <span class="eyebrow" data-icon="scan">OCR Draft</span>
+              <span class="tag tag-warn">待确认</span>
+            </div>
+            <h2>医嘱截图</h2>
+            <p class="muted">原图缩略图占位，保留 draft_id。</p>
+            <div class="button-row">
+              <button class="btn-ghost" data-icon="scan" data-result="image-preview">查看大图</button>
+              <span class="source">draft_id D-2031</span>
+            </div>
+            <div class="result-banner" id="image-preview" hidden>打开大图后可逐项核对 OCR 结果。</div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <span class="eyebrow" data-icon="edit">结构化字段</span>
+              <span class="tag tag-brand">可编辑</span>
+            </div>
+            <div class="field-list">
+              <div class="field">
+                <label>药名</label>
+                <div class="value">补剂</div>
+              </div>
+              <div class="field">
+                <label>剂量</label>
+                <div class="value">1 药片</div>
+              </div>
+              <div class="field low-confidence">
+                <label>频次</label>
+                <div class="value">每天 1 次</div>
+                <p class="field-hint">低置信度，需人工确认。</p>
+              </div>
+              <div class="field">
+                <label>时间建议</label>
+                <div class="value">08:30 · 饭后</div>
+              </div>
+              <div class="field missing">
+                <label>疗程</label>
+                <div class="value">缺失，需手动补充</div>
+              </div>
+              <div class="field">
+                <label>备注</label>
+                <div class="value">医生建议连续观察胃部反应。</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <span class="eyebrow" data-icon="ai">附加建议</span>
+              <span class="tag tag-success">可选</span>
+            </div>
+            <div class="list-item">
+              <div class="row"><strong>同步生成晚间副作用自查规则</strong><span class="tag">AI 建议</span></div>
+              <p class="muted">根据胃部反应给出关联规则建议，默认不直接保存。</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <span class="eyebrow" data-icon="check">结束动作</span>
+              <span class="pill">人工确认</span>
+            </div>
+            <div class="button-row">
+              <button class="btn-secondary" data-icon="edit" data-result="edit-note">继续编辑</button>
+              <a class="btn nav-link" data-icon="save" href="./therapy-rules.html">保存为疗程规则</a>
+              <a class="btn-ghost nav-link" data-icon="clock" href="./ai-suggestions.html">稍后</a>
+            </div>
+            <div class="result-banner warn" id="edit-note" hidden>编辑态需允许改字段、删误识别项、补缺字段。</div>
+          </article>
+        </div>
+        <footer class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab tab-link" data-page-link="today" href="./today.html">今日</a>
+            <a class="tab tab-link" data-page-link="progress" href="./progress-export.html">进展</a>
+            <a class="tab tab-link" data-page-link="ai" href="./ai-suggestions.html">AI</a>
+            <a class="tab tab-link" data-page-link="me" href="./my.html">我的</a>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>
