@@ -10,165 +10,100 @@
   <main class="prototype-shell">
     <section class="phone">
       <div class="screen">
-        <div class="statusbar"><span>9:41</span><span>5G 76%</span></div>
-        <header class="appbar">
-          <div class="page-actions">
-            <span class="top-chip" data-icon="home">首页</span>
-            <a class="top-chip chip-link" data-icon="scan" href="./ocr-review.html">扫描医嘱</a>
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar">
+            <div><h3>今日</h3></div>
+            <div class="icon-row">
+              <button class="icon-chip js-open-month" aria-label="打开月历">
+                <svg class="ico"><use href="#i-calendar"></use></svg>
+              </button>
+            </div>
           </div>
-          <h1>今日</h1>
-          <p>先看下一项任务，再处理风险和剩余任务。</p>
-        </header>
-
+        </div>
         <div class="content">
-          <article class="card today-date-card">
-            <div class="section-head">
-              <span class="eyebrow">3 月 30 日 · 周一</span>
-              <span class="pill">剩余 4 项</span>
-            </div>
-            <div class="date-strip">
-              <a class="day" href="./today.html"><span>五</span><strong>28</strong></a>
-              <a class="day" href="./today.html"><span>六</span><strong>29</strong></a>
-              <a class="day current" href="./today.html"><span>今</span><strong>30</strong></a>
-              <a class="day" href="./today.html"><span>二</span><strong>31</strong></a>
-              <a class="day" href="./today.html"><span>三</span><strong>1</strong></a>
-              <a class="day" href="./today.html"><span>四</span><strong>2</strong></a>
-              <a class="day" href="./today.html"><span>五</span><strong>3</strong></a>
+          <article class="card" style="padding:12px 14px; gap:10px;">
+            <div class="section-title"><span>3月30日</span><span>周一</span></div>
+            <div class="week-grid">
+              <div class="day-chip"><span>五</span><strong>28</strong><span class="dot"></span></div>
+              <div class="day-chip"><span>六</span><strong>29</strong><span class="dot"></span></div>
+              <div class="day-chip current"><span>今</span><strong>30</strong><span class="dot"></span></div>
+              <div class="day-chip"><span>二</span><strong>31</strong><span class="dot"></span></div>
+              <div class="day-chip"><span>三</span><strong>1</strong><span class="dot"></span></div>
+              <div class="day-chip"><span>四</span><strong>2</strong><span class="dot"></span></div>
+              <div class="day-chip"><span>五</span><strong>3</strong><span class="dot"></span></div>
             </div>
           </article>
-
-          <article class="card today-focus-card">
-            <div class="section-head">
-              <span class="eyebrow">下一项任务</span>
-              <span class="state tag-brand">待完成</span>
-            </div>
-            <h2>补剂</h2>
-            <p class="muted">08:30 · 饭后 1 片 · 来源 OCR 规则</p>
-            <div class="button-row">
-              <a class="btn nav-link" href="./task-detail.html">立即服用</a>
-              <a class="btn-ghost btn-text nav-link" href="./task-detail.html">查看详情</a>
+          <article class="card hero-card" style="padding:14px 16px;">
+            <div class="summary-strip"><span class="pill">下一项</span><span class="mini-chip">08:30</span></div>
+            <div class="task-main">
+              <div class="group-inline">
+                <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
+                <div><h4>补剂</h4><p class="subcopy">饭后 1 药片</p></div>
+              </div>
+              <a class="btn-primary" href="./therapy-rules.html">服药</a>
             </div>
           </article>
-
-          <article class="card today-risk-card">
-            <div class="section-head">
-              <span class="eyebrow">风险提醒</span>
-              <span class="tag tag-danger">2 项待处理</span>
-            </div>
-            <div class="list">
-              <div class="list-item">
-                <div class="row">
-                  <strong>补剂库存不足</strong>
-                  <span class="tag tag-warn">库存支线</span>
-                </div>
-                <div class="meta-row">
-                  <p class="muted">剩余 4 片，低于阈值 7 片。</p>
-                  <a class="btn-ghost btn-inline nav-link" href="./therapy-rules.html">去补货</a>
-                </div>
-              </div>
-              <div class="list-item">
-                <div class="row">
-                  <strong>通知权限可能失效</strong>
-                  <span class="tag tag-danger">权限异常</span>
-                </div>
-                <div class="meta-row">
-                  <p class="muted">最近 24 小时提醒未稳定触达。</p>
-                  <a class="btn-ghost btn-inline nav-link" href="./my.html">去检查</a>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="card today-task-list-card">
-            <div class="section-head">
-              <span class="eyebrow">今日待完成</span>
-              <span class="pill">Task 4 条</span>
-            </div>
-            <div class="list">
-              <a class="list-item nav-link" href="./task-detail.html">
-                <div class="row">
-                  <div class="list-copy">
-                    <strong>补剂</strong>
-                    <p>08:30 · 饭后 1 片</p>
-                  </div>
-                  <span class="state tag-brand">待完成</span>
-                </div>
-                <div class="meta-row">
-                  <span class="source">长期规则任务</span>
-                  <span class="tag">动作</span>
-                </div>
-              </a>
-              <a class="list-item nav-link" href="./task-detail.html">
-                <div class="row">
-                  <div class="list-copy">
-                    <strong>午间情绪</strong>
-                    <p>12:30 · 情绪自评</p>
-                  </div>
-                  <span class="state tag-brand">待完成</span>
-                </div>
-                <div class="meta-row">
-                  <span class="source">来源：AI 规则</span>
-                  <span class="tag">记录</span>
-                </div>
-              </a>
-              <a class="list-item nav-link" href="./task-detail.html">
-                <div class="row">
-                  <div class="list-copy">
-                    <strong>晚间副作用</strong>
-                    <p>20:00 · 恶心自查</p>
-                  </div>
-                  <span class="state tag-brand">待完成</span>
-                </div>
-                <div class="meta-row">
-                  <span class="source">来源：AI 规则</span>
-                  <span class="tag">高风险</span>
-                </div>
-              </a>
-              <a class="list-item nav-link" href="./task-detail.html">
-                <div class="row">
-                  <div class="list-copy">
-                    <strong>今晚 9 点补水提醒</strong>
-                    <p>21:00 · 一次性提醒</p>
-                  </div>
-                  <span class="state tag-warn">一次性</span>
-                </div>
-                <div class="meta-row">
-                  <span class="source">is_one_off = true</span>
-                  <span class="tag">仅今日</span>
-                </div>
-              </a>
-            </div>
-          </article>
-
-          <article class="card today-done-card">
-            <div class="section-head">
-              <span class="eyebrow">已完成</span>
-              <span class="tag tag-success">1 项</span>
-            </div>
-            <div class="list-item">
-              <div class="row">
-                <div class="list-copy">
-                  <strong>晨间散步</strong>
-                  <p>07:10 · 10 分钟</p>
-                </div>
-                <span class="state tag-success">已完成</span>
-              </div>
-              <div class="meta-row">
-                <span class="source">Record 已生成</span>
-                <span class="tag">actual_at 07:16</span>
-              </div>
-            </div>
+          <div class="section-title"><span>待完成</span><span>4</span></div>
+          <a class="task-row task-row-link" href="./therapy-rules.html">
+            <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
+            <div class="task-copy"><strong>补剂</strong><div class="task-meta"><span class="mini-chip">饭后</span><span class="mini-chip">OCR</span></div></div>
+            <div class="task-time">08:30</div>
+          </a>
+          <a class="task-row task-row-link" href="./therapy-rules.html">
+            <span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span>
+            <div class="task-copy"><strong>午间情绪</strong><div class="task-meta"><span class="mini-chip">自查</span><span class="mini-chip">1 分钟</span></div></div>
+            <div class="task-time">12:30</div>
+          </a>
+          <a class="task-row task-row-link" href="./therapy-rules.html">
+            <span class="ico-badge soft-gold"><svg class="ico"><use href="#i-spark"></use></svg></span>
+            <div class="task-copy"><strong>副作用自查</strong><div class="task-meta"><span class="mini-chip">恶心</span><span class="mini-chip">胃痛</span></div></div>
+            <div class="task-time">20:00</div>
+          </a>
+          <a class="task-row task-row-link" href="./therapy-rules.html">
+            <span class="ico-badge soft-green"><svg class="ico"><use href="#i-measure"></use></svg></span>
+            <div class="task-copy"><strong>睡前体重</strong><div class="task-meta"><span class="mini-chip">测量</span><span class="mini-chip">同步进展</span></div></div>
+            <div class="task-time">21:30</div>
+          </a>
+          <article class="card" style="padding:14px 16px;">
+            <div class="section-title"><span>已完成</span><span>1 项</span></div>
+            <article class="task-row" style="padding:12px 0 0; border:0; box-shadow:none; background:transparent;">
+              <span class="ico-badge soft-green"><svg class="ico"><use href="#i-activity"></use></svg></span>
+              <div class="task-copy"><strong>晨间散步</strong><div class="task-meta"><span class="mini-chip">10 分钟</span></div></div>
+              <span class="task-check"><svg class="ico"><use href="#i-check"></use></svg></span>
+            </article>
           </article>
         </div>
-
-        <footer class="bottom-nav">
+        <a class="floating-add" href="./ai.html" aria-label="新增">
+          <svg class="ico"><use href="#i-plus"></use></svg>
+        </a>
+        <div class="bottom-nav">
           <div class="bottom-nav-inner">
-            <a class="tab tab-link" data-page-link="today" href="./today.html">今日</a>
-            <a class="tab tab-link" data-page-link="progress" href="./progress-export.html">进展</a>
-            <a class="tab tab-link" data-page-link="ai" href="./ai-suggestions.html">AI</a>
-            <a class="tab tab-link" data-page-link="me" href="./my.html">我的</a>
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></a>
           </div>
-        </footer>
+        </div>
+        <div class="month-sheet" id="monthSheet">
+          <div class="sheet-card">
+            <div class="sheet-handle"></div>
+            <div class="row">
+              <strong style="font-size:19px;">2026 年 3 月</strong>
+              <button class="btn-ghost" id="closeMonthSheet" type="button">关闭</button>
+            </div>
+            <div class="month-grid">
+              <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span>
+              <div class="month-cell">23</div><div class="month-cell">24</div><div class="month-cell">25</div><div class="month-cell">26</div><div class="month-cell">27</div><div class="month-cell">28</div><div class="month-cell">1</div>
+              <div class="month-cell">2</div><div class="month-cell">3</div><div class="month-cell">4</div><div class="month-cell">5</div><div class="month-cell">6</div><div class="month-cell">7</div><div class="month-cell">8</div>
+              <div class="month-cell">9</div><div class="month-cell">10</div><div class="month-cell">11</div><div class="month-cell">12</div><div class="month-cell">13</div><div class="month-cell">14</div><div class="month-cell">15</div>
+              <div class="month-cell">16</div><div class="month-cell">17</div><div class="month-cell">18</div><div class="month-cell">19</div><div class="month-cell">20</div><div class="month-cell">21</div><div class="month-cell">22</div>
+              <div class="month-cell">23</div><div class="month-cell">24</div><div class="month-cell">25</div><div class="month-cell">26</div><div class="month-cell">27</div><div class="month-cell">28</div><div class="month-cell">29</div>
+              <div class="month-cell current">30</div><div class="month-cell">31</div><div class="month-cell">1</div><div class="month-cell">2</div><div class="month-cell">3</div><div class="month-cell">4</div><div class="month-cell">5</div><div class="month-cell">6</div>
+            </div>
+            <div class="outline-note">点击日期后回到当日任务视图。</div>
+          </div>
+        </div>
       </div>
     </section>
   </main>

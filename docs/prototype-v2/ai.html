@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy 原型 v2 - AI</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="ai">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar">
+            <div><h3>AI</h3><p>OCR、输入、表达</p></div>
+            <div class="icon-row"><span class="icon-chip"><svg class="ico"><use href="#i-spark"></use></svg></span></div>
+          </div>
+        </div>
+        <div class="content">
+          <div class="action-grid">
+            <a class="action-tile" href="./ocr-review.html"><span class="ico-badge"><svg class="ico"><use href="#i-camera"></use></svg></span><strong>扫描医嘱</strong><span class="tiny">生成规则</span></a>
+            <a class="action-tile" href="./ocr-review.html"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><strong>识别药单</strong><span class="tiny">导入药物</span></a>
+            <a class="action-tile" href="./ocr-review.html"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span><strong>记录不适</strong><span class="tiny">症状转记录</span></a>
+            <a class="action-tile" href="./ocr-review.html"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-plus"></use></svg></span><strong>新增提醒</strong><span class="tiny">一句话生成</span></a>
+          </div>
+          <div style="display:grid;gap:10px;">
+            <div class="chat-bubble user">医生说这个补剂每天早上饭后吃一片，我最近晚上会有点恶心。</div>
+            <div class="chat-bubble ai">我整理成 2 条：补剂规则、晚间副作用自查。</div>
+          </div>
+          <article class="ai-card">
+            <div class="section-title"><span>AI 建议</span><span>待确认</span></div>
+            <a class="task-row task-row-link" href="./therapy-rules.html">
+              <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
+              <div class="task-copy"><strong>补剂</strong><div class="task-meta"><span class="mini-chip">08:30</span><span class="mini-chip">饭后</span></div></div>
+              <div class="task-time">规则</div>
+            </a>
+            <a class="task-row task-row-link" href="./therapy-rules.html">
+              <span class="ico-badge soft-gold"><svg class="ico"><use href="#i-spark"></use></svg></span>
+              <div class="task-copy"><strong>晚间副作用</strong><div class="task-meta"><span class="mini-chip">20:00</span><span class="mini-chip">恶心</span></div></div>
+              <div class="task-time">规则</div>
+            </a>
+            <div class="button-row">
+              <a class="btn-primary" href="./therapy-rules.html">保存</a>
+              <a class="btn-ghost" href="./today.html">仅今天</a>
+            </div>
+          </article>
+          <div class="card" style="padding:12px;">
+            <textarea style="width:100%;min-height:88px;resize:none;border:0;background:transparent;outline:none;color:var(--text);line-height:1.6;" placeholder="输入医嘱、感受，或拍照上传..."></textarea>
+            <div class="button-row">
+              <button class="btn-ghost" type="button"><svg class="ico"><use href="#i-upload"></use></svg></button>
+              <a class="btn-primary" href="./ocr-review.html">发送</a>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>

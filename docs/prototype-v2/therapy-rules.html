@@ -10,149 +10,41 @@
   <main class="prototype-shell">
     <section class="phone">
       <div class="screen">
-        <div class="statusbar"><span>9:41</span><span>5G 76%</span></div>
-        <header class="appbar">
-          <div class="page-actions">
-            <a class="back-link nav-link" data-icon="user" href="./my.html">返回我的</a>
-            <a class="top-chip chip-link" data-icon="ai" href="./ai-suggestions.html">新增规则</a>
-          </div>
-          <h1>我的疗程</h1>
-          <p>管理长期规则、状态、库存和来源。</p>
-        </header>
-        <div class="content">
-          <article class="card">
-            <div class="section-head">
-              <span class="eyebrow" data-icon="pill">管理工具</span>
-              <span class="pill">Rule Center</span>
-            </div>
-            <div class="search-box">搜索规则名称、来源或时间</div>
-            <div class="grid-3">
-              <button class="tab active" data-switch-group="rule-filter" data-switch-target="all">全部</button>
-              <button class="tab" data-switch-group="rule-filter" data-switch-target="enabled">启用中</button>
-              <button class="tab" data-switch-group="rule-filter" data-switch-target="paused">暂停</button>
-            </div>
-            <div class="button-row">
-              <a class="btn nav-link" data-icon="ai" href="./ai-suggestions.html">新增规则</a>
-              <button class="btn-ghost" data-icon="trend" data-result="filter-note">筛选</button>
-            </div>
-            <div class="result-banner warn" id="filter-note" hidden>筛选维度包括类型、来源、状态、时间和库存。</div>
-          </article>
-
-          <div class="panel active" data-panel-group="rule-filter" data-panel-target="all">
-            <article class="card">
-              <div class="group-head">
-                <strong>药物规则</strong>
-                <span class="pill">2 条</span>
-              </div>
-              <div class="list">
-                <div class="list-item">
-                  <div class="row">
-                    <div class="list-copy">
-                      <strong>补剂</strong>
-                      <p>08:30 · 饭后 1 片</p>
-                    </div>
-                    <span class="state tag-success">启用中</span>
-                  </div>
-                  <div class="meta-row">
-                    <span class="source">来源：OCR 导入</span>
-                    <span class="tag tag-warn">库存 4 / 阈值 7</span>
-                  </div>
-                  <div class="button-row">
-                    <a class="btn-ghost nav-link" data-icon="pill" href="./task-detail.html">查看</a>
-                    <button class="btn-ghost" data-icon="edit" data-result="edit-rule-note">编辑</button>
-                    <button class="btn-secondary" data-icon="alert" data-result="pause-rule-note">暂停</button>
-                  </div>
-                </div>
-                <div class="list-item">
-                  <div class="row">
-                    <div class="list-copy">
-                      <strong>备用胃药</strong>
-                      <p>按需 · 不生成固定任务</p>
-                    </div>
-                    <span class="state tag-warn">暂停</span>
-                  </div>
-                  <div class="meta-row">
-                    <span class="source">来源：手动创建</span>
-                    <span class="tag">按需规则</span>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="card">
-              <div class="group-head">
-                <strong>测量与记录规则</strong>
-                <span class="pill">3 条</span>
-              </div>
-              <div class="list">
-                <div class="list-item">
-                  <div class="row">
-                    <div class="list-copy">
-                      <strong>晚间体重</strong>
-                      <p>21:30 · 每晚记录</p>
-                    </div>
-                    <span class="state tag-success">启用中</span>
-                  </div>
-                  <div class="meta-row">
-                    <span class="source">来源：手动创建</span>
-                    <span class="tag">指标规则</span>
-                  </div>
-                </div>
-                <div class="list-item">
-                  <div class="row">
-                    <div class="list-copy">
-                      <strong>午间情绪</strong>
-                      <p>12:30 · 情绪自评</p>
-                    </div>
-                    <span class="state tag-success">启用中</span>
-                  </div>
-                  <div class="meta-row">
-                    <span class="source">来源：AI 生成</span>
-                    <span class="tag">情绪规则</span>
-                  </div>
-                </div>
-                <div class="list-item">
-                  <div class="row">
-                    <div class="list-copy">
-                      <strong>晨间散步</strong>
-                      <p>07:10 · 今日沉淀</p>
-                    </div>
-                    <span class="state tag-success">启用中</span>
-                  </div>
-                  <div class="meta-row">
-                    <span class="source">来源：今日沉淀</span>
-                    <span class="tag">活动规则</span>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <div class="result-banner" id="edit-rule-note" hidden>可修改频率、时间、库存阈值和提醒方式。</div>
-            <div class="result-banner warn" id="pause-rule-note" hidden>暂停后不再生成未来 Task，但保留历史 Record。</div>
-          </div>
-
-          <div class="panel" data-panel-group="rule-filter" data-panel-target="enabled">
-            <article class="card">
-              <div class="group-head"><strong>启用中的规则</strong><span class="pill">4 条</span></div>
-              <p class="muted">这里只显示仍会生成未来 Task 的规则。</p>
-            </article>
-          </div>
-
-          <div class="panel" data-panel-group="rule-filter" data-panel-target="paused">
-            <article class="card">
-              <div class="group-head"><strong>已暂停规则</strong><span class="pill">1 条</span></div>
-              <p class="muted">按需备用胃药当前暂停，不生成提醒，也不会进入今日任务。</p>
-            </article>
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar">
+            <div><h3>我的疗程</h3><p>规则管理</p></div>
+            <div class="icon-row"><a class="icon-chip" href="./ai.html"><svg class="ico"><use href="#i-plus"></use></svg></a></div>
           </div>
         </div>
-        <footer class="bottom-nav">
+        <div class="content">
+          <article class="group-card">
+            <div class="group-head"><div class="group-inline"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><strong>药物</strong></div><span class="mini-chip">2 条</span></div>
+            <a class="task-row task-row-link" href="./ocr-review.html"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>补剂</strong><div class="task-meta"><span class="mini-chip">08:30</span><span class="mini-chip">OCR</span><span class="mini-chip">启用中</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></a>
+            <div class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>备用胃药</strong><div class="task-meta"><span class="mini-chip">按需</span><span class="mini-chip">暂停</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></div>
+          </article>
+          <article class="group-card">
+            <div class="group-head"><div class="group-inline"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-measure"></use></svg></span><strong>测量</strong></div><span class="mini-chip">1 条</span></div>
+            <div class="task-row"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-measure"></use></svg></span><div class="task-copy"><strong>晚间体重</strong><div class="task-meta"><span class="mini-chip">21:30</span><span class="mini-chip">启用中</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></div>
+          </article>
+          <article class="group-card">
+            <div class="group-head"><div class="group-inline"><span class="ico-badge"><svg class="ico"><use href="#i-activity"></use></svg></span><strong>活动</strong></div><span class="mini-chip">1 条</span></div>
+            <div class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-activity"></use></svg></span><div class="task-copy"><strong>晨间散步</strong><div class="task-meta"><span class="mini-chip">07:10</span><span class="mini-chip">今日沉淀</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></div>
+          </article>
+          <article class="group-card">
+            <div class="group-head"><div class="group-inline"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span><strong>情绪和症状</strong></div><span class="mini-chip">2 条</span></div>
+            <div class="task-row"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span><div class="task-copy"><strong>午间情绪</strong><div class="task-meta"><span class="mini-chip">12:30</span><span class="mini-chip">AI</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></div>
+            <div class="task-row"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-spark"></use></svg></span><div class="task-copy"><strong>晚间副作用</strong><div class="task-meta"><span class="mini-chip">20:00</span><span class="mini-chip">AI</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></div>
+          </article>
+        </div>
+        <div class="bottom-nav">
           <div class="bottom-nav-inner">
-            <a class="tab tab-link" data-page-link="today" href="./today.html">今日</a>
-            <a class="tab tab-link" data-page-link="progress" href="./progress-export.html">进展</a>
-            <a class="tab tab-link" data-page-link="ai" href="./ai-suggestions.html">AI</a>
-            <a class="tab tab-link" data-page-link="me" href="./my.html">我的</a>
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></a>
           </div>
-        </footer>
+        </div>
       </div>
     </section>
   </main>

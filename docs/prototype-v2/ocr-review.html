@@ -10,96 +10,39 @@
   <main class="prototype-shell">
     <section class="phone">
       <div class="screen">
-        <div class="statusbar"><span>9:41</span><span>5G 76%</span></div>
-        <header class="appbar">
-          <div class="page-actions">
-            <a class="back-link nav-link" data-icon="ai" href="./ai-suggestions.html">返回 AI</a>
-            <a class="top-chip chip-link" data-icon="save" href="./therapy-rules.html">保存结果</a>
-          </div>
-          <h1>OCR 确认</h1>
-          <p>先核对草稿，再决定保存或稍后处理。</p>
-        </header>
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar"><div><h3>OCR 确认</h3><p>识别结果需人工确认</p></div></div>
+        </div>
         <div class="content">
           <article class="card hero-card">
-            <div class="section-head">
-              <span class="eyebrow" data-icon="scan">OCR Draft</span>
-              <span class="tag tag-warn">待确认</span>
+            <div class="group-inline">
+              <span class="ico-badge"><svg class="ico"><use href="#i-camera"></use></svg></span>
+              <div><h4>医嘱截图</h4><p class="subcopy">已生成规则草稿</p></div>
             </div>
-            <h2>医嘱截图</h2>
-            <p class="muted">原图缩略图占位，保留 draft_id。</p>
-            <div class="button-row">
-              <button class="btn-ghost" data-icon="scan" data-result="image-preview">查看大图</button>
-              <span class="source">draft_id D-2031</span>
-            </div>
-            <div class="result-banner" id="image-preview" hidden>打开大图后可逐项核对 OCR 结果。</div>
           </article>
-
+          <div class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>补剂</strong><div class="task-meta"><span class="mini-chip">药名</span></div></div><span class="task-time">确认</span></div>
+          <div class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>1 药片</strong><div class="task-meta"><span class="mini-chip">剂量</span></div></div><span class="task-time">确认</span></div>
+          <div class="task-row" style="border-color:rgba(193,100,77,.5); background:rgba(255,242,239,.96);"><span class="ico-badge"><svg class="ico"><use href="#i-clock"></use></svg></span><div class="task-copy"><strong>每天 1 次</strong><div class="task-meta"><span class="mini-chip">低置信度</span></div></div><span class="task-time">频次</span></div>
+          <div class="task-row"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-clock"></use></svg></span><div class="task-copy"><strong>08:30 · 饭后</strong><div class="task-meta"><span class="mini-chip">时间建议</span></div></div><span class="task-time">确认</span></div>
           <article class="card">
-            <div class="section-head">
-              <span class="eyebrow" data-icon="edit">结构化字段</span>
-              <span class="tag tag-brand">可编辑</span>
-            </div>
-            <div class="field-list">
-              <div class="field">
-                <label>药名</label>
-                <div class="value">补剂</div>
-              </div>
-              <div class="field">
-                <label>剂量</label>
-                <div class="value">1 药片</div>
-              </div>
-              <div class="field low-confidence">
-                <label>频次</label>
-                <div class="value">每天 1 次</div>
-                <p class="field-hint">低置信度，需人工确认。</p>
-              </div>
-              <div class="field">
-                <label>时间建议</label>
-                <div class="value">08:30 · 饭后</div>
-              </div>
-              <div class="field missing">
-                <label>疗程</label>
-                <div class="value">缺失，需手动补充</div>
-              </div>
-              <div class="field">
-                <label>备注</label>
-                <div class="value">医生建议连续观察胃部反应。</div>
-              </div>
-            </div>
+            <div class="section-title"><span>风险提示</span><span>1 项</span></div>
+            <p class="subcopy">“每天 1 次” 这项可能来自模糊文字，建议你手动确认。需要的话可同步生成晚间副作用自查规则。</p>
           </article>
-
-          <article class="card">
-            <div class="section-head">
-              <span class="eyebrow" data-icon="ai">附加建议</span>
-              <span class="tag tag-success">可选</span>
-            </div>
-            <div class="list-item">
-              <div class="row"><strong>同步生成晚间副作用自查规则</strong><span class="tag">AI 建议</span></div>
-              <p class="muted">根据胃部反应给出关联规则建议，默认不直接保存。</p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="section-head">
-              <span class="eyebrow" data-icon="check">结束动作</span>
-              <span class="pill">人工确认</span>
-            </div>
-            <div class="button-row">
-              <button class="btn-secondary" data-icon="edit" data-result="edit-note">继续编辑</button>
-              <a class="btn nav-link" data-icon="save" href="./therapy-rules.html">保存为疗程规则</a>
-              <a class="btn-ghost nav-link" data-icon="clock" href="./ai-suggestions.html">稍后</a>
-            </div>
-            <div class="result-banner warn" id="edit-note" hidden>编辑态需允许改字段、删误识别项、补缺字段。</div>
-          </article>
-        </div>
-        <footer class="bottom-nav">
-          <div class="bottom-nav-inner">
-            <a class="tab tab-link" data-page-link="today" href="./today.html">今日</a>
-            <a class="tab tab-link" data-page-link="progress" href="./progress-export.html">进展</a>
-            <a class="tab tab-link" data-page-link="ai" href="./ai-suggestions.html">AI</a>
-            <a class="tab tab-link" data-page-link="me" href="./my.html">我的</a>
+          <div class="button-row">
+            <a class="btn-primary" href="./therapy-rules.html">保存</a>
+            <a class="btn-secondary" href="./ai.html">编辑</a>
+            <a class="btn-ghost" href="./ai.html">稍后</a>
           </div>
-        </footer>
+        </div>
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></a>
+          </div>
+        </div>
       </div>
     </section>
   </main>

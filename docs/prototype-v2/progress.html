@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy 原型 v2 - 进展</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="progress">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar"><div><h3>进展</h3><p>总结看趋势，列表看记录</p></div></div>
+        </div>
+        <div class="content">
+          <div class="segment">
+            <button class="seg-btn active" type="button" data-progress="summary">总结</button>
+            <button class="seg-btn" type="button" data-progress="list">列表</button>
+          </div>
+          <div class="progress-panel active" id="progress-summary">
+            <div class="metric-strip">
+              <article class="metric-box">
+                <div class="group-inline"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-check"></use></svg></span><span class="tiny">完成率</span></div>
+                <strong>86%</strong>
+              </article>
+              <article class="metric-box">
+                <div class="group-inline"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-spark"></use></svg></span><span class="tiny">连续</span></div>
+                <strong>5 天</strong>
+              </article>
+            </div>
+            <article class="card">
+              <div class="section-title"><span>7 天趋势</span><span>Summary</span></div>
+              <div style="height:124px;border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,.22)),repeating-linear-gradient(90deg,transparent 0,transparent 12%,rgba(212,193,174,.24) 12.5%,transparent 13.5%),linear-gradient(180deg,rgba(247,217,197,.24),transparent 100%);position:relative;overflow:hidden;border:1px solid rgba(212,193,174,.52)">
+                <div style="position:absolute;inset:auto 12px 14px;display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end;height:84px;">
+                  <div style="height:58px;border-radius:14px 14px 10px 10px;background:linear-gradient(180deg,#df8f62 0%,#be693d 100%);"></div>
+                  <div style="height:72px;border-radius:14px 14px 10px 10px;background:linear-gradient(180deg,#df8f62 0%,#be693d 100%);"></div>
+                  <div style="height:54px;border-radius:14px 14px 10px 10px;background:linear-gradient(180deg,#e8c5ae 0%,#d89c77 100%);"></div>
+                  <div style="height:64px;border-radius:14px 14px 10px 10px;background:linear-gradient(180deg,#df8f62 0%,#be693d 100%);"></div>
+                  <div style="height:47px;border-radius:14px 14px 10px 10px;background:linear-gradient(180deg,#e8c5ae 0%,#d89c77 100%);"></div>
+                  <div style="height:76px;border-radius:14px 14px 10px 10px;background:linear-gradient(180deg,#df8f62 0%,#be693d 100%);"></div>
+                  <div style="height:70px;border-radius:14px 14px 10px 10px;background:linear-gradient(180deg,#df8f62 0%,#be693d 100%);"></div>
+                </div>
+              </div>
+            </article>
+            <article class="card">
+              <div class="section-title"><span>分类表现</span><span>4 类</span></div>
+              <div class="quick-list">
+                <div class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>药物</strong><div class="task-meta"><span class="mini-chip">稳定</span></div></div><div class="task-time">92%</div></div>
+                <div class="task-row"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-measure"></use></svg></span><div class="task-copy"><strong>测量</strong><div class="task-meta"><span class="mini-chip">良好</span></div></div><div class="task-time">80%</div></div>
+                <div class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-activity"></use></svg></span><div class="task-copy"><strong>活动</strong><div class="task-meta"><span class="mini-chip">可提升</span></div></div><div class="task-time">74%</div></div>
+                <div class="task-row"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span><div class="task-copy"><strong>情绪和症状</strong><div class="task-meta"><span class="mini-chip">夜间易漏</span></div></div><div class="task-time">67%</div></div>
+              </div>
+            </article>
+          </div>
+          <div class="progress-panel" id="progress-list">
+            <article class="card">
+              <div class="section-title"><span>每日流水</span><span>近 3 天</span></div>
+              <div class="ledger-day">
+                <div class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>2026/03/30</strong><div class="task-meta"><span class="mini-chip">补剂</span><span class="mini-chip">情绪</span><span class="mini-chip">体重</span></div></div><div class="task-time">4 条</div></div>
+                <div class="task-row"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-check"></use></svg></span><div class="task-copy"><strong>2026/03/29</strong><div class="task-meta"><span class="mini-chip">已服</span><span class="mini-chip">无明显不适</span></div></div><div class="task-time">3 条</div></div>
+                <div class="task-row"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span><div class="task-copy"><strong>2026/03/28</strong><div class="task-meta"><span class="mini-chip">情绪缺失</span><span class="mini-chip">可补录</span></div></div><div class="task-time">2 条</div></div>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>
