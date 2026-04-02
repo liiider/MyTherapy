@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy Prototype v2 - 长期药物</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="today">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar detail-appbar once-record-appbar">
+            <div>
+              <h3>长期药物</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="content detail-content once-record-content">
+          <article class="card detail-fields-card once-form-card">
+            <label class="once-form-row">
+              <span class="detail-field-label">名称</span>
+              <input id="longName" class="once-input" type="text" value="补剂" />
+            </label>
+            <label class="once-form-row">
+              <span class="detail-field-label">数量</span>
+              <input id="longQty" class="once-input" type="number" min="1" step="1" value="1" />
+            </label>
+            <label class="once-form-row">
+              <span class="detail-field-label">单位</span>
+              <input id="longUnit" class="once-input" type="text" value="药片" />
+            </label>
+          </article>
+
+          <article class="card detail-action-card once-save-card">
+            <div class="once-action-row">
+              <button class="btn-ghost" id="longFormCancel" type="button">取消</button>
+              <button class="btn-primary" id="longFormNext" type="button">下一步</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const nameInput = document.getElementById("longName");
+      const unitInput = document.getElementById("longUnit");
+      const qtyInput = document.getElementById("longQty");
+      const nextButton = document.getElementById("longFormNext");
+      const cancelButton = document.getElementById("longFormCancel");
+
+      nextButton?.addEventListener("click", () => {
+        const name = (nameInput?.value || "补剂").trim() || "补剂";
+        const unit = (unitInput?.value || "药片").trim() || "药片";
+        const qty = (qtyInput?.value || "1").trim() || "1";
+        const target = `./today-medication-entry.html?mode=long&name=${encodeURIComponent(name)}&unit=${encodeURIComponent(unit)}&qty=${encodeURIComponent(qty)}`;
+        window.location.assign(target);
+      });
+
+      cancelButton?.addEventListener("click", () => {
+        window.location.assign("./today.html");
+      });
+    });
+  </script>
+</body>
+</html>

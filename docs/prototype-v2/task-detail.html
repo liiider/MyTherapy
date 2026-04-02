@@ -1,9 +1,95 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=./therapy-rules.html" />
-  <title>Redirecting...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy 原型 v2 - 补剂</title>
+  <link rel="stylesheet" href="./styles.css" />
 </head>
-<body></body>
+<body data-page="today">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar detail-appbar">
+            <div>
+              <a class="detail-back" href="./today.html">返回今日</a>
+              <h3>补剂</h3>
+              <p>药物任务</p>
+            </div>
+          </div>
+        </div>
+        <div class="content detail-content">
+          <article class="card hero-card detail-header-card">
+            <div class="group-inline">
+              <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
+              <div>
+                <h4>补剂</h4>
+                <p class="subcopy">饭后服用，记录当前执行情况。</p>
+              </div>
+            </div>
+            <div class="detail-status-row">
+              <span class="pill">待完成</span>
+              <span class="mini-chip">计划 08:00</span>
+            </div>
+          </article>
+
+          <article class="card detail-fields-card">
+            <div class="detail-field-row">
+              <span class="detail-field-label">剂量</span>
+              <strong>1 药片</strong>
+            </div>
+            <div class="detail-field-row">
+              <span class="detail-field-label">时间</span>
+              <strong>08:00</strong>
+            </div>
+            <div class="detail-field-row">
+              <span class="detail-field-label">说明</span>
+              <strong>饭后</strong>
+            </div>
+          </article>
+
+          <article class="card detail-note-card">
+            <div class="section-title"><span>备注</span><span>可选</span></div>
+            <button class="detail-note-trigger" type="button" data-result="noteEditor">你可以在这里添加一句备注</button>
+            <div class="detail-note-editor" id="noteEditor" hidden>
+              <textarea class="detail-note-textarea" placeholder="例如：今天饭后 10 分钟服用，胃部感觉正常。"></textarea>
+            </div>
+          </article>
+
+          <article class="card detail-action-card">
+            <div class="button-row detail-primary-actions">
+              <a class="btn-primary" href="./today.html">完成</a>
+              <a class="btn-secondary" href="./today.html">延后</a>
+              <a class="btn-ghost" href="./today.html">跳过</a>
+            </div>
+            <div class="button-row">
+              <button class="btn-ghost" type="button" data-result="backfillEditor">补记</button>
+            </div>
+            <div class="detail-backfill-editor" id="backfillEditor" hidden>
+              <div class="detail-field-row">
+                <span class="detail-field-label">补记时间</span>
+                <strong>08:12</strong>
+              </div>
+              <textarea class="detail-note-textarea" placeholder="补记备注（可选）"></textarea>
+              <div class="button-row">
+                <a class="btn-primary" href="./today.html">保存补记</a>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
 </html>
