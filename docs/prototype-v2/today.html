@@ -24,7 +24,7 @@
         </div>
         <div class="content today-content">
           <button class="card today-date-card js-open-month" type="button" aria-label="打开月历">
-            <div class="section-title"><span>3月30日</span><span>周一</span></div>
+            <div class="today-date-head"><span>3月30日</span><span>周一</span></div>
             <div class="week-grid">
               <div class="day-chip"><span>五</span><strong>28</strong><span class="dot"></span></div>
               <div class="day-chip"><span>六</span><strong>29</strong><span class="dot"></span></div>
@@ -36,58 +36,80 @@
             </div>
           </button>
 
-          <article class="card hero-card today-next-card">
-            <div class="summary-strip"><span class="pill">下一项</span><span class="mini-chip">08:30</span></div>
-            <div class="today-line-item today-line-item-hero">
-              <div class="group-inline">
-                <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
-                <div class="task-copy"><strong>补剂</strong><p class="subcopy">饭后 1 药片</p></div>
+          <div class="today-section-title today-section-title-primary"><span>待完成</span><span id="todayPendingCount">4</span></div>
+
+          <div class="task-row today-line-card is-overdue" id="todaySupplementRow">
+            <a href="./task-detail.html" style="display: contents; color: inherit;">
+              <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
+              <div class="task-copy">
+                <strong>补剂</strong>
+                <div class="task-meta task-meta-plain">
+                  <span>1 药片</span>
+                  <span class="meta-sep">·</span>
+                  <span>饭后</span>
+                  <span class="overdue-tag">逾期</span>
+                </div>
               </div>
-              <a class="btn-primary" href="./task-detail.html">服药</a>
+            </a>
+            <div class="today-line-side">
+              <span class="today-line-time">08:30</span>
+              <button class="task-check js-quick-complete" data-name="补剂" aria-label="完成">
+                <svg class="ico"><use href="#i-check"></use></svg>
+              </button>
             </div>
-          </article>
+          </div>
 
-          <div class="section-title"><span>待完成</span><span>4</span></div>
-
-          <a class="task-row task-row-link today-line-card" href="./task-detail.html">
-            <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
-            <div class="task-copy">
-              <strong>补剂</strong>
-              <div class="task-meta"><span class="mini-chip">饭后</span><span class="mini-chip">OCR</span></div>
+          <div class="task-row today-line-card">
+            <a href="./task-detail.html" style="display: contents; color: inherit;">
+              <span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span>
+              <div class="task-copy">
+                <strong>午间情绪</strong>
+                <div class="task-meta task-meta-plain"><span>自查</span><span class="meta-sep">·</span><span>1 分钟</span></div>
+              </div>
+            </a>
+            <div class="today-line-side">
+              <span class="today-line-time">13:00</span>
+              <button class="task-check js-quick-complete" data-name="午间情绪" aria-label="完成">
+                <svg class="ico"><use href="#i-check"></use></svg>
+              </button>
             </div>
-            <div class="today-line-side"><span class="today-line-status">待完成</span><span class="today-line-time">08:30</span></div>
-          </a>
+          </div>
 
-          <a class="task-row task-row-link today-line-card" href="./task-detail.html">
-            <span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span>
-            <div class="task-copy">
-              <strong>午间情绪</strong>
-              <div class="task-meta"><span class="mini-chip">自查</span><span class="mini-chip">1 分钟</span></div>
+          <div class="task-row today-line-card">
+            <a href="./task-detail.html" style="display: contents; color: inherit;">
+              <span class="ico-badge soft-gold"><svg class="ico"><use href="#i-spark"></use></svg></span>
+              <div class="task-copy">
+                <strong>副作用自查</strong>
+                <div class="task-meta task-meta-plain"><span>恶心、胃痛</span></div>
+              </div>
+            </a>
+            <div class="today-line-side">
+              <span class="today-line-time">20:00</span>
+              <button class="task-check js-quick-complete" data-name="副作用自查" aria-label="完成">
+                <svg class="ico"><use href="#i-check"></use></svg>
+              </button>
             </div>
-            <div class="today-line-side"><span class="today-line-status">待完成</span><span class="today-line-time">12:30</span></div>
-          </a>
+          </div>
 
-          <a class="task-row task-row-link today-line-card" href="./task-detail.html">
-            <span class="ico-badge soft-gold"><svg class="ico"><use href="#i-spark"></use></svg></span>
-            <div class="task-copy">
-              <strong>副作用自查</strong>
-              <div class="task-meta"><span class="mini-chip">恶心</span><span class="mini-chip">胃痛</span></div>
+          <div class="task-row today-line-card">
+            <a href="./task-detail.html" style="display: contents; color: inherit;">
+              <span class="ico-badge soft-green"><svg class="ico"><use href="#i-measure"></use></svg></span>
+              <div class="task-copy">
+                <strong>睡前体重</strong>
+                <div class="task-meta task-meta-plain"><span>测量</span><span class="meta-sep">·</span><span>同步进展</span></div>
+              </div>
+            </a>
+            <div class="today-line-side">
+              <span class="today-line-time">21:30</span>
+              <button class="task-check js-quick-complete" data-name="睡前体重" aria-label="完成">
+                <svg class="ico"><use href="#i-check"></use></svg>
+              </button>
             </div>
-            <div class="today-line-side"><span class="today-line-status">待完成</span><span class="today-line-time">20:00</span></div>
-          </a>
-
-          <a class="task-row task-row-link today-line-card" href="./task-detail.html">
-            <span class="ico-badge soft-green"><svg class="ico"><use href="#i-measure"></use></svg></span>
-            <div class="task-copy">
-              <strong>睡前体重</strong>
-              <div class="task-meta"><span class="mini-chip">测量</span><span class="mini-chip">同步进展</span></div>
-            </div>
-            <div class="today-line-side"><span class="today-line-status">待完成</span><span class="today-line-time">21:30</span></div>
-          </a>
+          </div>
 
           <details class="card today-completed-card" id="completed">
             <summary>
-              <span>已完成 1 项</span>
+              <div class="today-section-title today-section-title-secondary"><span>已完成</span><span>1 项</span></div>
             </summary>
             <div class="today-completed-list">
               <a class="task-row task-row-link today-line-card is-completed" href="./task-detail.html">

@@ -14,7 +14,7 @@
           <div class="status"><span>9:41</span><span>5G · 76%</span></div>
           <div class="appbar detail-appbar">
             <div>
-              <a class="detail-back" id="frequencyBack" href="./today-medication-entry.html?mode=long">返回类型</a>
+              <a class="detail-back" id="frequencyBack" href="./medication-long-form.html?mode=long">返回药物信息</a>
               <h3>服用频率</h3>
             </div>
           </div>
@@ -70,8 +70,8 @@
 
       if (back) {
         back.href = queryString
-          ? `./today-medication-entry.html?mode=long&${queryString}`
-          : "./today-medication-entry.html?mode=long";
+          ? `./medication-long-form.html?mode=long&${queryString}`
+          : "./medication-long-form.html?mode=long";
       }
 
       const withQuery = (url) => (queryString ? `${url}&${queryString}` : url);

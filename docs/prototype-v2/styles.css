@@ -154,6 +154,13 @@ a { text-decoration: none; }
 
 .task-row-link {
   grid-template-columns: 38px 1fr auto;
+  transition: transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+
+.task-row-link:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(220, 170, 130, .72);
 }
 
 .hero-card,
@@ -181,6 +188,47 @@ a { text-decoration: none; }
   color: var(--muted);
   font-size: 12px;
   padding: 0 2px;
+}
+
+.today-date-head,
+.today-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.today-date-head {
+  padding: 0 2px;
+  color: rgba(122, 105, 93, .88);
+  font-size: 12px;
+}
+
+.today-date-head span:last-child {
+  color: rgba(138, 120, 107, .72);
+}
+
+.today-section-title {
+  padding: 2px 2px 0;
+}
+
+.today-section-title-primary {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.today-section-title-primary span:last-child {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.today-section-title-secondary {
+  width: 100%;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .card h4 {
@@ -220,6 +268,32 @@ a { text-decoration: none; }
 .mini-chip {
   background: rgba(255, 255, 255, .92);
   color: var(--muted);
+}
+
+.overdue-tag {
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid rgba(196, 109, 66, 0.2);
+}
+
+.task-row.is-overdue {
+  border-color: rgba(196, 109, 66, 0.3);
+  background: linear-gradient(180deg, #fffaf7 0%, #fff5ee 100%);
+}
+
+.task-meta-plain {
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  flex-wrap: nowrap;
+}
+
+.task-meta-plain .meta-sep {
+  color: rgba(138, 120, 107, .48);
 }
 
 .btn-primary,
@@ -358,38 +432,38 @@ a { text-decoration: none; }
 .week-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
+  gap: 4px;
 }
 
 .day-chip {
   display: grid;
   justify-items: center;
-  gap: 4px;
-  padding: 6px 2px;
-  border-radius: 14px;
+  gap: 3px;
+  padding: 4px 2px;
+  border-radius: 12px;
   border: 1px solid transparent;
   background: transparent;
-  color: var(--muted);
+  color: rgba(138, 120, 107, .78);
   font-size: 10px;
 }
 
 .day-chip strong {
-  font-size: 15px;
-  color: var(--text);
+  font-size: 14px;
+  color: rgba(77, 60, 49, .88);
   font-weight: 600;
 }
 
 .day-chip.current {
-  background: linear-gradient(180deg, #fff5ee 0%, #ffe8d7 100%);
-  border-color: rgba(196, 109, 66, .42);
+  background: linear-gradient(180deg, rgba(255, 245, 238, .72) 0%, rgba(255, 232, 215, .76) 100%);
+  border-color: rgba(196, 109, 66, .24);
 }
 
 .dot {
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
   border-radius: 999px;
   background: var(--accent);
-  opacity: .8;
+  opacity: .55;
 }
 
 .ico,
@@ -447,13 +521,27 @@ a { text-decoration: none; }
 }
 
 .task-check {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border-radius: 999px;
-  border: 2px solid rgba(47, 148, 105, .5);
+  border: 2px solid rgba(47, 148, 105, .4);
   color: var(--success);
   display: grid;
   place-items: center;
+  background: transparent;
+  padding: 0;
+  transition: all var(--fast) var(--ease);
+}
+
+.task-check:hover {
+  background: rgba(47, 148, 105, .08);
+  border-color: var(--success);
+  transform: scale(1.05);
+}
+
+.task-check .ico {
+  width: 16px;
+  height: 16px;
 }
 
 .action-grid {
@@ -592,6 +680,8 @@ a { text-decoration: none; }
   width: 100%;
   text-align: left;
   cursor: pointer;
+  gap: 12px;
+  padding: 12px 14px;
 }
 
 .today-date-card:hover {
@@ -628,6 +718,10 @@ a { text-decoration: none; }
 
 .today-line-card {
   background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,249,243,.95));
+  grid-template-columns: 38px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px 14px 12px;
 }
 
 .today-line-card.is-completed {
@@ -637,8 +731,8 @@ a { text-decoration: none; }
 .today-line-side {
   display: grid;
   justify-items: end;
-  gap: 4px;
-  min-width: 68px;
+  gap: 8px;
+  min-width: 58px;
 }
 
 .today-line-status {
@@ -651,9 +745,9 @@ a { text-decoration: none; }
 }
 
 .today-line-time {
-  font-size: 22px;
+  font-size: 19px;
   line-height: 1;
-  font-weight: 700;
+  font-weight: 650;
   letter-spacing: -.03em;
 }
 
@@ -669,8 +763,8 @@ a { text-decoration: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: var(--text);
-  font-size: 14px;
+  color: var(--muted);
+  font-size: 13px;
 }
 
 .today-completed-card summary::-webkit-details-marker {

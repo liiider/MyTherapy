@@ -68,7 +68,7 @@
         const name = (nameInput?.value || "补剂").trim() || "补剂";
         const unit = (unitInput?.value || "药片").trim() || "药片";
         const qty = (qtyInput?.value || "1").trim() || "1";
-        const target = `./today-medication-entry.html?mode=long&name=${encodeURIComponent(name)}&unit=${encodeURIComponent(unit)}&qty=${encodeURIComponent(qty)}`;
+        const target = `./medication-frequency.html?mode=long&name=${encodeURIComponent(name)}&unit=${encodeURIComponent(unit)}&qty=${encodeURIComponent(qty)}`;
         window.location.assign(target);
       });
 

@@ -189,17 +189,219 @@ document.addEventListener("DOMContentLoaded", () => {
       const cleanURL = `${window.location.pathname}${window.location.hash || ""}`;
       window.history.replaceState({}, "", cleanURL);
     }
+
+    if (params.get("from") === "today-quick") {
+      const action = params.get("action");
+      const name = (params.get("name") || "任务").trim();
+      const actual = (params.get("actual") || "08:12").trim();
+      const todayContent = document.querySelector(".today-content");
+      const completedCard = document.querySelector(".today-completed-card");
+      const completedList = document.querySelector(".today-completed-list");
+      const pendingCount = document.getElementById("todayPendingCount");
+      const supplementRow = document.getElementById("todaySupplementRow");
+      if (action === "complete") {
+        if (todayContent) {
+          const notice = document.createElement("article");
+          notice.className = "outline-note today-inline-notice";
+          notice.textContent = `已完成：${name}，已从 Today 快捷处理。`;
+          todayContent.insertBefore(notice, todayContent.firstElementChild || null);
+        }
+
+        supplementRow?.remove();
+        if (pendingCount) pendingCount.textContent = "3";
+
+        if (completedCard instanceof HTMLDetailsElement) {
+          completedCard.open = true;
+          const summaryLabel = completedCard.querySelector("summary span");
+          if (summaryLabel) summaryLabel.textContent = "已完成 2 项";
+        }
+
+        if (completedList) {
+          const row = document.createElement("a");
+          row.className = "task-row task-row-link today-line-card is-completed";
+          row.href = "./task-detail.html";
+          row.innerHTML = `
+            <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
+            <div class="task-copy">
+              <strong>${name}</strong>
+              <div class="task-meta"></div>
+            </div>
+            <div class="today-line-side"><span class="today-line-status is-completed">已完成</span><span class="today-line-time">${actual}</span></div>
+          `;
+          completedList.insertBefore(row, completedList.firstElementChild || null);
+        }
+
+        const cleanURL = `${window.location.pathname}${window.location.hash || ""}`;
+        window.history.replaceState({}, "", cleanURL);
+      }
+    }
+
+    if (params.get("from") === "task-detail") {
+      const action = params.get("action");
+      const name = (params.get("name") || "任务").trim();
+      const note = (params.get("note") || "").trim();
+      const scheduled = (params.get("scheduled") || "08:30").trim();
+      const actual = (params.get("actual") || scheduled).trim();
+      const todayContent = document.querySelector(".today-content");
+      const completedCard = document.querySelector(".today-completed-card");
+      const completedList = document.querySelector(".today-completed-list");
+      const pendingCount = document.getElementById("todayPendingCount");
+      const supplementRow = document.getElementById("todaySupplementRow");
+      const insertNotice = (text) => {
+        if (!todayContent) return;
+        const notice = document.createElement("article");
+        notice.className = "outline-note today-inline-notice";
+        notice.textContent = text;
+        todayContent.insertBefore(notice, todayContent.firstElementChild || null);
+      };
+
+      const createNoteMark = () => {
+        const mark = document.createElement("span");
+        mark.className = "today-note-mark";
+        mark.setAttribute("aria-label", "有备注");
+        mark.innerHTML = '<svg class="ico"><use href="#i-note"></use></svg>';
+        return mark;
+      };
+
+      const addCompletedRow = (label, displayTime, noteText, tagText = "药物") => {
+        if (!(completedCard instanceof HTMLDetailsElement) || !completedList) return;
+        completedCard.open = true;
+        const summaryLabel = completedCard.querySelector("summary span");
+        if (summaryLabel) {
+          const match = summaryLabel.textContent.match(/(\d+)/);
+          const current = match ? Number(match[1]) : 1;
+          summaryLabel.textContent = `已完成 ${current + 1} 项`;
+        }
+
+        const row = document.createElement("a");
+        row.className = "task-row task-row-link today-line-card is-completed";
+        row.href = "./task-detail.html";
+        row.innerHTML = `
+          <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
+          <div class="task-copy">
+            <strong>${label}</strong>
+            <div class="task-meta"><span class="mini-chip">${tagText}</span></div>
+          </div>
+          <div class="today-line-side"><span class="today-line-status is-completed">已完成</span><span class="today-line-time">${displayTime}</span></div>
+        `;
+        if (noteText) {
+          const meta = row.querySelector(".task-meta");
+          meta?.appendChild(createNoteMark());
+        }
+        completedList.insertBefore(row, completedList.firstElementChild || null);
+      };
+
+      const cleanURL = `${window.location.pathname}${window.location.hash || ""}`;
+
+      if (action === "complete") {
+        insertNotice(`已完成：${name}，记录时间 ${actual}。`);
+        supplementRow?.remove();
+        if (pendingCount) pendingCount.textContent = "3";
+        addCompletedRow(name, actual, note, "饭后");
+      }
+
+      window.history.replaceState({}, "", cleanURL);
+    }
+
+    if (params.get("notice")) {
+      const noticeType = params.get("notice");
+      const todayContent = document.querySelector(".today-content");
+      const supplementRow = document.getElementById("todaySupplementRow");
+      const pendingCount = document.getElementById("todayPendingCount");
+
+      if (noticeType === "postponed") {
+        if (todayContent) {
+          const notice = document.createElement("article");
+          notice.className = "outline-note today-inline-notice";
+          notice.textContent = "任务已延后，稍后将再次提醒。";
+          todayContent.insertBefore(notice, todayContent.firstElementChild);
+        }
+        supplementRow?.remove();
+        if (pendingCount) pendingCount.textContent = "3";
+      }
+
+      if (noticeType === "backfilled") {
+        const hasNote = params.get("hasNote") === "1";
+        if (todayContent) {
+          const notice = document.createElement("article");
+          notice.className = "outline-note today-inline-notice";
+          notice.textContent = hasNote ? "已补记这次执行，并附带备注。" : "已补记这次执行。";
+          todayContent.insertBefore(notice, todayContent.firstElementChild);
+        }
+        supplementRow?.remove();
+        if (pendingCount) pendingCount.textContent = "3";
+        
+        // Add to completed list
+        const completedCard = document.querySelector(".today-completed-card");
+        const completedList = document.querySelector(".today-completed-list");
+        if (completedCard instanceof HTMLDetailsElement && completedList) {
+          completedCard.open = true;
+          const summaryLabel = completedCard.querySelector("summary span");
+          if (summaryLabel) {
+            const match = summaryLabel.textContent.match(/(\d+)/);
+            const current = match ? Number(match[1]) : 1;
+            summaryLabel.textContent = `已完成 ${current + 1} 项`;
+          }
+          const row = document.createElement("a");
+          row.className = "task-row task-row-link today-line-card is-completed";
+          row.href = "./task-detail.html";
+          row.innerHTML = `
+            <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
+            <div class="task-copy">
+              <strong>补剂</strong>
+              <div class="task-meta"><span class="mini-chip">补记</span></div>
+            </div>
+            <div class="today-line-side"><span class="today-line-status is-completed">已补记</span><span class="today-line-time">08:42</span></div>
+          `;
+          if (hasNote) {
+            const meta = row.querySelector(".task-meta");
+            const mark = document.createElement("span");
+            mark.className = "today-note-mark";
+            mark.setAttribute("aria-label", "有备注");
+            mark.innerHTML = '<svg class="ico"><use href="#i-note"></use></svg>';
+            meta?.appendChild(mark);
+          }
+          completedList.insertBefore(row, completedList.firstElementChild || null);
+        }
+      }
+      
+      const cleanURL = `${window.location.pathname}${window.location.hash || ""}`;
+      window.history.replaceState({}, "", cleanURL);
+    }
   }
+
+  // Quick complete from Today page
+  document.querySelectorAll(".js-quick-complete").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const name = btn.dataset.name;
+      const now = new Date();
+      const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      window.location.assign(`./today.html?from=today-quick&action=complete&name=${encodeURIComponent(name)}&actual=${time}`);
+    });
+  });
 
   const progressButtons = document.querySelectorAll("[data-progress]");
   const progressPanels = document.querySelectorAll(".progress-panel");
+  
+  const switchProgressMode = (mode) => {
+    progressButtons.forEach((item) => item.classList.toggle("active", item.dataset.progress === mode));
+    progressPanels.forEach((panel) => panel.classList.toggle("active", panel.id === "progress-" + mode));
+  };
+
   progressButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      const mode = button.dataset.progress;
-      progressButtons.forEach((item) => item.classList.toggle("active", item === button));
-      progressPanels.forEach((panel) => panel.classList.toggle("active", panel.id === "progress-" + mode));
+      switchProgressMode(button.dataset.progress);
     });
   });
+
+  if (currentPage === "progress") {
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get("mode");
+    if (mode === "list" || mode === "summary") {
+      switchProgressMode(mode);
+    }
+  }
 });
 
 document.addEventListener("DOMContentLoaded", () => {

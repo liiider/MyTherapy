@@ -21,61 +21,31 @@
           </div>
         </div>
         <div class="content detail-content">
-          <article class="card hero-card detail-header-card">
-            <div class="group-inline">
-              <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
-              <div>
-                <h4>补剂</h4>
-                <p class="subcopy">饭后服用，记录当前执行情况。</p>
-              </div>
-            </div>
-            <div class="detail-status-row">
-              <span class="pill">待完成</span>
-              <span class="mini-chip">计划 08:00</span>
-            </div>
-          </article>
-
           <article class="card detail-fields-card">
             <div class="detail-field-row">
-              <span class="detail-field-label">剂量</span>
+              <span class="detail-field-label">名称</span>
+              <strong>补剂</strong>
+            </div>
+            <div class="detail-field-row">
+              <span class="detail-field-label">数量/单位</span>
               <strong>1 药片</strong>
             </div>
             <div class="detail-field-row">
               <span class="detail-field-label">时间</span>
-              <strong>08:00</strong>
+              <strong>08:30</strong>
             </div>
             <div class="detail-field-row">
-              <span class="detail-field-label">说明</span>
-              <strong>饭后</strong>
-            </div>
-          </article>
-
-          <article class="card detail-note-card">
-            <div class="section-title"><span>备注</span><span>可选</span></div>
-            <button class="detail-note-trigger" type="button" data-result="noteEditor">你可以在这里添加一句备注</button>
-            <div class="detail-note-editor" id="noteEditor" hidden>
-              <textarea class="detail-note-textarea" placeholder="例如：今天饭后 10 分钟服用，胃部感觉正常。"></textarea>
+              <span class="detail-field-label">备注</span>
+              <strong>饭后服用</strong>
             </div>
           </article>
 
           <article class="card detail-action-card">
-            <div class="button-row detail-primary-actions">
-              <a class="btn-primary" href="./today.html">完成</a>
-              <a class="btn-secondary" href="./today.html">延后</a>
-              <a class="btn-ghost" href="./today.html">跳过</a>
+            <div class="button-row detail-primary-actions" style="grid-template-columns: 1fr;">
+              <a class="btn-primary" id="detailCompleteAction" href="./today.html?from=task-detail&action=complete&name=%E8%A1%A5%E5%89%82&scheduled=08:30&actual=08:12&status=%E5%B7%B2%E5%AE%8C%E6%88%90">确认完成</a>
             </div>
-            <div class="button-row">
-              <button class="btn-ghost" type="button" data-result="backfillEditor">补记</button>
-            </div>
-            <div class="detail-backfill-editor" id="backfillEditor" hidden>
-              <div class="detail-field-row">
-                <span class="detail-field-label">补记时间</span>
-                <strong>08:12</strong>
-              </div>
-              <textarea class="detail-note-textarea" placeholder="补记备注（可选）"></textarea>
-              <div class="button-row">
-                <a class="btn-primary" href="./today.html">保存补记</a>
-              </div>
+            <div style="text-align: center; margin-top: 8px;">
+              <a href="./today.html" style="color: var(--muted); font-size: 14px;">返回今日</a>
             </div>
           </article>
         </div>

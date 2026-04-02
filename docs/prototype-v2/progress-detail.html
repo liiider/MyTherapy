@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy 原型 v2 - 进展详情</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="progress">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar detail-appbar">
+            <div>
+              <a class="detail-back" href="./progress.html?mode=list">返回进展</a>
+              <h3>阿司匹林 (Aspirin)</h3>
+              <p>进展单条记录详情</p>
+            </div>
+          </div>
+        </div>
+        <div class="content detail-content">
+          <article class="card hero-card detail-header-card">
+            <div class="group-inline">
+              <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
+              <div>
+                <h4>阿司匹林 (Aspirin)</h4>
+                <p class="subcopy">药物记录详情</p>
+              </div>
+            </div>
+            <div class="detail-status-row">
+              <span class="pill">已完成</span>
+              <span class="mini-chip">08:30</span>
+            </div>
+          </article>
+
+          <article class="card detail-fields-card">
+            <div class="detail-field-row">
+              <span class="detail-field-label">名称</span>
+              <strong>阿司匹林 (Aspirin)</strong>
+            </div>
+            <div class="detail-field-row">
+              <span class="detail-field-label">状态</span>
+              <strong>已完成</strong>
+            </div>
+            <div class="detail-field-row">
+              <span class="detail-field-label">日期</span>
+              <strong>2026/03/30</strong>
+            </div>
+            <div class="detail-field-row">
+              <span class="detail-field-label">时间</span>
+              <strong>08:30</strong>
+            </div>
+            <div class="detail-field-row">
+              <span class="detail-field-label">备注</span>
+              <strong>随餐服用，无不适。</strong>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>

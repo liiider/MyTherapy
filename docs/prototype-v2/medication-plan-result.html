@@ -28,7 +28,7 @@
           <article class="card detail-action-card">
             <div class="once-action-row">
               <a class="btn-ghost" href="./today.html">返回今日</a>
-              <a class="btn-primary" href="./my.html">去我的疗程</a>
+              <a class="btn-primary" id="toRules" href="./therapy-rules.html">去我的疗程</a>
             </div>
           </article>
         </div>
@@ -48,11 +48,20 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const params = new URLSearchParams(window.location.search);
-      if (params.get("plan") !== "prn") return;
+      const plan = params.get("plan") || "regular";
       const title = document.getElementById("resultTitle");
       const desc = document.getElementById("resultDesc");
-      if (title) title.textContent = "按需药物";
-      if (desc) desc.textContent = "不会进入今日，可在单次记录中使用";
+      const toRules = document.getElementById("toRules");
+
+      if (plan === "prn") {
+        if (title) title.textContent = "按需药物";
+        if (desc) desc.textContent = "不会进入今日，可在单次记录中使用";
+      }
+
+      if (toRules) {
+        const query = params.toString();
+        toRules.href = `./therapy-rules.html?from=long-med&${query}`;
+      }
     });
   </script>
 </body>
