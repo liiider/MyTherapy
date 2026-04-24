@@ -7,6 +7,13 @@ Thumbs.db
 # Logs
 *.log
 
+# Local runtime data
+data/app-state.json
+
+# Python cache
+__pycache__/
+*.pyc
+
 # Environment
 .env
 .env.*

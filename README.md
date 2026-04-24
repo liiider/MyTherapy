@@ -2,6 +2,36 @@
 
 Patient-side AI medication management product.
 
+## MVP App
+
+This repository now includes a dependency-free local full-stack MVP.
+
+Run:
+
+```powershell
+npm.cmd start
+```
+
+Open:
+
+```text
+http://127.0.0.1:4173
+```
+
+Validate:
+
+```powershell
+npm.cmd run check
+node test\domain.test.js
+```
+
+Notes:
+
+- AI and OCR are mocked in `server/aiMock.js`.
+- Backend APIs are implemented with Node's built-in HTTP server.
+- Local state is persisted to `data/app-state.json` at runtime.
+- The app is a product MVP scaffold, not yet an App Store-ready iOS build.
+
 ## Project Docs
 
 - [PRD](./docs/PRD.md)
@@ -23,6 +53,7 @@ Patient-side AI medication management product.
 - [business-flow-page-design-v2.zh-CN.md](./docs/business-flow-page-design-v2.zh-CN.md)
 - [core-page-specs.md](./docs/core-page-specs.md)
 - [core-page-specs.zh-CN.md](./docs/core-page-specs.zh-CN.md)
+- [当前项目审查与上架计划](./docs/current-project-review-and-launch-plan.zh-CN.md)
 
 
 - [decision-log.zh-CN.md](D:/MyTherapy/docs/decision-log.zh-CN.md)
