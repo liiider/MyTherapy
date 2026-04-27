@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import { analyzeInput, extractOcrDraft } from "./aiMock.js";
+import { analyzeInput, extractOcrDraft } from "./aiService.js";
 import {
   addOneOffTask,
   addSymptomRecord,
@@ -59,8 +59,9 @@ async function handleApi(req, res) {
   }
 
   if (route === "POST /api/ocr/mock") {
+    const body = await readJson(req);
     const state = await loadState();
-    state.ocrDraft = extractOcrDraft();
+    state.ocrDraft = await extractOcrDraft(body);
     await saveState(state);
     sendJson(res, { ocrDraft: state.ocrDraft });
     return;
@@ -69,6 +70,7 @@ async function handleApi(req, res) {
   if (route === "POST /api/ocr/confirm") {
     const body = await readJson(req);
     const state = await loadState();
+    requirePrivacyAcknowledged(state);
     const rule = confirmOcrDraft(state, body);
     ensureTasksForDate(state, todayISO());
     await saveState(state);
@@ -87,7 +89,7 @@ async function handleApi(req, res) {
   if (route === "POST /api/ai/analyze") {
     const body = await readJson(req);
     const state = await loadState();
-    const suggestion = analyzeInput(body);
+    const suggestion = await analyzeInput(body);
     state.aiSuggestions = [suggestion, ...state.aiSuggestions].slice(0, 10);
     await saveState(state);
     sendJson(res, { suggestion });
@@ -97,6 +99,7 @@ async function handleApi(req, res) {
   if (route === "POST /api/ai/save-rules") {
     const body = await readJson(req);
     const state = await loadState();
+    requirePrivacyAcknowledged(state);
     const rules = saveAiRules(state, Array.isArray(body.rules) ? body.rules : []);
     ensureTasksForDate(state, todayISO());
     await saveState(state);
@@ -107,9 +110,11 @@ async function handleApi(req, res) {
   if (route === "POST /api/tasks/one-off") {
     const body = await readJson(req);
     const state = await loadState();
+    requirePrivacyAcknowledged(state);
+    const beforeTaskIds = new Set(state.tasks.map((task) => task.id));
     const task = addOneOffTask(state, body);
     await saveState(state);
-    sendJson(res, { task, state: decorateState(state) });
+    sendJson(res, { task, existing: beforeTaskIds.has(task.id), state: decorateState(state) });
     return;
   }
 
@@ -144,6 +149,7 @@ async function handleApi(req, res) {
   if (route === "POST /api/records/symptom") {
     const body = await readJson(req);
     const state = await loadState();
+    requirePrivacyAcknowledged(state);
     const record = addSymptomRecord(state, body);
     await saveState(state);
     sendJson(res, { record, state: decorateState(state) });
@@ -185,6 +191,7 @@ async function handleApi(req, res) {
 
   if (route === "POST /api/reports") {
     const state = await loadState();
+    requirePrivacyAcknowledged(state);
     const report = createExportReport(state);
     await saveState(state);
     sendJson(res, { report, state: decorateState(state) });
@@ -201,6 +208,13 @@ function decorateState(state) {
     risks: collectRisks(state),
     summary: summarizeProgress(state),
   };
+}
+
+function requirePrivacyAcknowledged(state) {
+  if (state.profile?.privacyAcknowledged) {
+    return;
+  }
+  throw validationError("privacyAcknowledged", "请先确认隐私与医疗免责声明。");
 }
 
 async function readJson(req) {

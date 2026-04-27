@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy Prototype v2 - 长期药物类型</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="today">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar detail-appbar">
+            <div>
+              <a class="detail-back" id="longTypeBack" href="./medication-long-form.html">返回基础信息</a>
+              <h3>长期药物类型</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="content detail-content medication-entry-content">
+          <article class="card long-summary-card">
+            <div class="detail-field-row">
+              <span class="detail-field-label">名称</span>
+              <strong id="longSummaryName">补剂</strong>
+            </div>
+            <div class="detail-field-row">
+              <span class="detail-field-label">单位 / 数量</span>
+              <strong id="longSummaryDose">药片 / 1</strong>
+            </div>
+          </article>
+
+          <article class="card detail-header-card">
+            <div class="option-list option-list-compact">
+              <a class="option-item" id="longRegularLink" href="./medication-frequency.html">
+                <div><strong>常规提醒</strong></div>
+              </a>
+              <a class="option-item" id="longPrnLink" href="./medication-plan-result.html?plan=prn">
+                <div><strong>按需药物</strong></div>
+              </a>
+            </div>
+            <p class="subcopy long-note-line">保存到疗程，不进入今日</p>
+          </article>
+        </div>
+
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const mode = params.get("mode");
+      if (mode === "once") {
+        window.location.replace("./medication-once-record.html?source=entry");
+        return;
+      }
+
+      const name = (params.get("name") || "补剂").trim() || "补剂";
+      const unit = (params.get("unit") || "药片").trim() || "药片";
+      const qty = (params.get("qty") || "1").trim() || "1";
+      const query = `name=${encodeURIComponent(name)}&unit=${encodeURIComponent(unit)}&qty=${encodeURIComponent(qty)}`;
+
+      const summaryName = document.getElementById("longSummaryName");
+      const summaryDose = document.getElementById("longSummaryDose");
+      const back = document.getElementById("longTypeBack");
+      const regularLink = document.getElementById("longRegularLink");
+      const prnLink = document.getElementById("longPrnLink");
+
+      if (summaryName) summaryName.textContent = name;
+      if (summaryDose) summaryDose.textContent = `${unit} / ${qty}`;
+      if (back) back.href = `./medication-long-form.html?${query}`;
+      if (regularLink) regularLink.href = `./medication-frequency.html?${query}`;
+      if (prnLink) prnLink.href = `./medication-plan-result.html?plan=prn&${query}`;
+    });
+  </script>
+</body>
+</html>

@@ -9,6 +9,7 @@ Thumbs.db
 
 # Local runtime data
 data/app-state.json
+data/verify-state/
 
 # Python cache
 __pycache__/

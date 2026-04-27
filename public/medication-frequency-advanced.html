@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy Prototype v2 - 高级频率</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="today">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar detail-appbar">
+            <div>
+              <a class="detail-back" id="advancedBack" href="./medication-frequency.html">返回频率</a>
+              <h3>高级频率</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="content detail-content">
+          <article class="card detail-header-card">
+            <div class="option-list option-list-compact">
+              <button class="option-item" type="button" data-advanced="interval">
+                <div><strong>间隔</strong></div>
+                <span class="option-mark"></span>
+              </button>
+              <button class="option-item is-selected" type="button" data-advanced="multiple">
+                <div><strong>每天多次</strong></div>
+                <span class="option-mark"></span>
+              </button>
+              <button class="option-item" type="button" data-advanced="weekly">
+                <div><strong>特定日期</strong></div>
+                <span class="option-mark"></span>
+              </button>
+              <button class="option-item" type="button" data-advanced="cycle">
+                <div><strong>循环模式</strong></div>
+                <span class="option-mark"></span>
+              </button>
+            </div>
+          </article>
+
+          <article class="card detail-action-card">
+            <a class="btn-primary" href="./medication-reminder-time.html?preset=multiple" id="advancedNext">下一步</a>
+          </article>
+        </div>
+
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const queryString = params.toString();
+      const items = document.querySelectorAll("[data-advanced]");
+      const next = document.getElementById("advancedNext");
+      const back = document.getElementById("advancedBack");
+      let selected = "multiple";
+
+      if (back) {
+        back.href = queryString
+          ? `./medication-frequency.html?${queryString}`
+          : "./medication-frequency.html";
+      }
+
+      const withQuery = (url) => (queryString ? `${url}&${queryString}` : url);
+
+      const syncNext = () => {
+        if (!next) return;
+        next.href = withQuery(`./medication-reminder-time.html?preset=${encodeURIComponent(selected)}`);
+      };
+
+      items.forEach((item) => {
+        item.addEventListener("click", () => {
+          selected = item.dataset.advanced || "multiple";
+          items.forEach((current) => current.classList.toggle("is-selected", current === item));
+          syncNext();
+        });
+      });
+
+      syncNext();
+    });
+  </script>
+</body>
+</html>

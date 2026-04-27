@@ -1,0 +1,70 @@
+{
+  "pages": [
+    {
+      "path": "pages/today/index",
+      "style": {
+        "navigationBarTitleText": "今日"
+      }
+    },
+    {
+      "path": "pages/import/index",
+      "style": {
+        "navigationBarTitleText": "导入医嘱"
+      }
+    },
+    {
+      "path": "pages/ocr-review/index",
+      "style": {
+        "navigationBarTitleText": "OCR 确认"
+      }
+    },
+    {
+      "path": "pages/task-detail/index",
+      "style": {
+        "navigationBarTitleText": "任务详情"
+      }
+    },
+    {
+      "path": "pages/therapy/index",
+      "style": {
+        "navigationBarTitleText": "用药计划"
+      }
+    },
+    {
+      "path": "pages/progress/index",
+      "style": {
+        "navigationBarTitleText": "进展"
+      }
+    },
+    {
+      "path": "pages/profile/index",
+      "style": {
+        "navigationBarTitleText": "我的"
+      }
+    }
+  ],
+  "tabBar": {
+    "color": "#4E6670",
+    "selectedColor": "#0891B2",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/today/index",
+        "text": "今日"
+      },
+      {
+        "pagePath": "pages/progress/index",
+        "text": "进展"
+      },
+      {
+        "pagePath": "pages/import/index",
+        "text": "AI"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的"
+      }
+    ]
+  }
+}

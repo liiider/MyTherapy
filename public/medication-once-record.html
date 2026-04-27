@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy Prototype v2 - &#21333;&#27425;&#33647;&#29289;&#35760;&#24405;</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="today">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar detail-appbar once-record-appbar">
+            <div>
+              <h3>&#21333;&#27425;&#33647;&#29289;&#35760;&#24405;</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="content detail-content once-record-content">
+          <article class="card once-prn-card" aria-label="按需选择药物区">
+            <div class="section-title"><span>按需选择药物</span></div>
+            <div class="once-prn-grid">
+              <button class="once-prn-item" type="button" data-prn-name="奥美拉唑" data-prn-unit="药片" data-prn-note="腹痛时使用">
+                <strong>奥美拉唑</strong>
+              </button>
+              <button class="once-prn-item" type="button" data-prn-name="布洛芬" data-prn-unit="药片" data-prn-note="头痛时使用">
+                <strong>布洛芬</strong>
+              </button>
+              <button class="once-prn-item" type="button" data-prn-name="益生菌" data-prn-unit="袋" data-prn-note="腹胀时使用">
+                <strong>益生菌</strong>
+              </button>
+            </div>
+          </article>
+
+          <article class="card detail-fields-card once-form-card">
+            <label class="once-form-row">
+              <span class="detail-field-label">&#21517;&#31216;</span>
+              <input id="onceName" class="once-input" type="text" value="&#34917;&#21058;" />
+            </label>
+            <label class="once-form-row">
+              <span class="detail-field-label">&#25968;&#37327;</span>
+              <input id="onceQty" class="once-input" type="number" min="1" step="1" value="1" />
+            </label>
+            <label class="once-form-row">
+              <span class="detail-field-label">&#21333;&#20301;</span>
+              <input id="onceUnit" class="once-input" type="text" value="&#33647;&#29255;" />
+            </label>
+            <label class="once-form-row">
+              <span class="detail-field-label">&#26085;&#26399;&#26102;&#38388;</span>
+              <input id="onceDateTime" class="once-input" type="datetime-local" />
+            </label>
+            <label class="once-form-row">
+              <span class="detail-field-label">&#22791;&#27880;</span>
+              <textarea id="onceNote" class="once-input once-textarea" placeholder="&#22635;&#20889;&#26412;&#27425;&#35760;&#24405;&#22791;&#27880;"></textarea>
+            </label>
+          </article>
+
+          <article class="card detail-action-card once-save-card">
+            <div class="once-action-row">
+              <button class="btn-ghost" id="cancelOnceRecord" type="button">&#21462;&#28040;</button>
+              <button class="btn-primary" id="saveOnceRecord" type="button">&#20445;&#23384;</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>&#20170;&#26085;</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>&#36827;&#23637;</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>&#25105;&#30340;</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const nameInput = document.getElementById("onceName");
+      const unitInput = document.getElementById("onceUnit");
+      const qtyInput = document.getElementById("onceQty");
+      const noteInput = document.getElementById("onceNote");
+      const dateTimeInput = document.getElementById("onceDateTime");
+      const saveButton = document.getElementById("saveOnceRecord");
+      const cancelButton = document.getElementById("cancelOnceRecord");
+      const prnItems = document.querySelectorAll("[data-prn-name]");
+
+      if (dateTimeInput) {
+        const now = new Date();
+        const localISO = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+        dateTimeInput.value = localISO;
+      }
+
+      cancelButton?.addEventListener("click", () => {
+        window.location.assign("./today.html");
+      });
+
+      prnItems.forEach((item) => {
+        item.addEventListener("click", () => {
+          const name = item.getAttribute("data-prn-name") || "";
+          const unit = item.getAttribute("data-prn-unit") || "药片";
+          const note = item.getAttribute("data-prn-note") || "";
+
+          if (nameInput) nameInput.value = name;
+          if (unitInput) unitInput.value = unit;
+          if (qtyInput) qtyInput.value = "1";
+          if (noteInput && !noteInput.value.trim()) noteInput.value = note;
+
+          prnItems.forEach((current) => current.classList.toggle("is-selected", current === item));
+        });
+      });
+
+      saveButton?.addEventListener("click", () => {
+        const name = (nameInput?.value || "Medication").trim() || "Medication";
+        const dateTime = dateTimeInput?.value || "";
+        const displayTime = dateTime && dateTime.length >= 16 ? dateTime.slice(11, 16) : "--:--";
+        const target = `./today.html?from=med-once&name=${encodeURIComponent(name)}&time=${encodeURIComponent(displayTime)}#completed`;
+        window.location.assign(target);
+      });
+    });
+  </script>
+</body>
+</html>

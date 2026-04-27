@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy 原型 v2 - 我的</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="me">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar"><div><h3>我的</h3><p>疗程管理优先</p></div></div>
+        </div>
+        <div class="content">
+          <article class="card profile-card">
+            <div class="group-inline">
+              <span class="ico-badge"><svg class="ico"><use href="#i-user"></use></svg></span>
+              <div><h4>lider</h4><p class="subcopy">先把疗程规则管清楚</p></div>
+            </div>
+            <div class="button-row"><a class="btn-primary" href="./therapy-rules.html">进入疗程</a></div>
+          </article>
+          <a class="task-row task-row-link" href="./therapy-rules.html">
+            <span class="ico-badge"><svg class="ico"><use href="#i-calendar"></use></svg></span>
+            <div class="task-copy"><strong>疗程管理</strong><div class="task-meta"><span class="mini-chip">核心入口</span></div></div>
+            <svg class="ico"><use href="#i-chevron"></use></svg>
+          </a>
+          <div class="task-row">
+            <span class="ico-badge soft-gold"><svg class="ico"><use href="#i-clock"></use></svg></span>
+            <div class="task-copy"><strong>提醒与通知</strong><div class="task-meta"><span class="mini-chip">后续补充</span></div></div>
+            <svg class="ico"><use href="#i-chevron"></use></svg>
+          </div>
+          <div class="task-row">
+            <span class="ico-badge soft-green"><svg class="ico"><use href="#i-user"></use></svg></span>
+            <div class="task-copy"><strong>账号与资料</strong><div class="task-meta"><span class="mini-chip">后续补充</span></div></div>
+            <svg class="ico"><use href="#i-chevron"></use></svg>
+          </div>
+          <div class="task-row">
+            <span class="ico-badge"><svg class="ico"><use href="#i-spark"></use></svg></span>
+            <div class="task-copy"><strong>帮助与反馈</strong><div class="task-meta"><span class="mini-chip">后续补充</span></div></div>
+            <svg class="ico"><use href="#i-chevron"></use></svg>
+          </div>
+        </div>
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>

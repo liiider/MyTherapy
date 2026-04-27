@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy Prototype v2 - 长期药物已保存</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="today">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar detail-appbar">
+            <div>
+              <h3>已保存到疗程</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="content detail-content">
+          <article class="card detail-header-card long-result-card">
+            <h4 id="resultTitle">常规提醒</h4>
+            <p class="subcopy long-result-copy" id="resultDesc">今日将生成提醒</p>
+          </article>
+
+          <article class="card detail-action-card">
+            <div class="once-action-row">
+              <a class="btn-ghost" href="./today.html">返回今日</a>
+              <a class="btn-primary" id="toRules" href="./therapy-rules.html">去我的疗程</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const plan = params.get("plan") || "regular";
+      const title = document.getElementById("resultTitle");
+      const desc = document.getElementById("resultDesc");
+      const toRules = document.getElementById("toRules");
+
+      if (plan === "prn") {
+        if (title) title.textContent = "按需药物";
+        if (desc) desc.textContent = "不会进入今日，可在单次记录中使用";
+      }
+
+      if (toRules) {
+        const query = params.toString();
+        toRules.href = `./therapy-rules.html?from=long-med&${query}`;
+      }
+    });
+  </script>
+</body>
+</html>

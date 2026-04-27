@@ -3,7 +3,7 @@ import path from "node:path";
 
 import { createSeedState } from "./domain.js";
 
-const DATA_DIR = path.resolve("data");
+const DATA_DIR = path.resolve(process.env.MYTHERAPY_DATA_DIR ?? "data");
 const DATA_FILE = path.join(DATA_DIR, "app-state.json");
 
 export async function loadState() {

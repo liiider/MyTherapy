@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy 原型 v2 - 补剂</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="today">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar detail-appbar">
+            <div>
+              <a class="detail-back" href="./today.html">返回今日</a>
+              <h3>补剂</h3>
+              <p>药物任务</p>
+            </div>
+          </div>
+        </div>
+        <div class="content detail-content">
+          <article class="card detail-fields-card">
+            <div class="detail-field-row">
+              <span class="detail-field-label">名称</span>
+              <strong>补剂</strong>
+            </div>
+            <div class="detail-field-row">
+              <span class="detail-field-label">数量/单位</span>
+              <strong>1 药片</strong>
+            </div>
+            <div class="detail-field-row">
+              <span class="detail-field-label">时间</span>
+              <strong>08:30</strong>
+            </div>
+            <div class="detail-field-row">
+              <span class="detail-field-label">备注</span>
+              <strong>饭后服用</strong>
+            </div>
+          </article>
+
+          <article class="card detail-action-card">
+            <div class="button-row detail-primary-actions" style="grid-template-columns: 1fr;">
+              <a class="btn-primary" id="detailCompleteAction" href="./today.html?from=task-detail&action=complete&name=%E8%A1%A5%E5%89%82&scheduled=08:30&actual=08:12&status=%E5%B7%B2%E5%AE%8C%E6%88%90">确认完成</a>
+            </div>
+            <div style="text-align: center; margin-top: 8px;">
+              <a href="./today.html" style="color: var(--muted); font-size: 14px;">返回今日</a>
+            </div>
+          </article>
+        </div>
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>

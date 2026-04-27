@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy 原型 v2 - 页面已合并</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="today">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div class="content detail-content" style="padding-top: 42px;">
+          <article class="card detail-action-card">
+            <h4>页面已合并</h4>
+            <p class="subcopy">按需药品选择已并入“单次药物记录”页面。</p>
+            <a class="btn-primary" href="./medication-once-record.html">进入单次药物记录</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    window.setTimeout(() => {
+      window.location.replace("./medication-once-record.html");
+    }, 400);
+  </script>
+</body>
+</html>

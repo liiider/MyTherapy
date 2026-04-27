@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy Prototype v2 - 提醒时间</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="today">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar detail-appbar">
+            <div>
+              <a class="detail-back" id="timeBack" href="./medication-frequency.html">返回频率</a>
+              <h3>提醒时间</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="content detail-content">
+          <article class="card detail-header-card">
+            <div class="section-title"><span>时间 + 数量</span></div>
+            <div class="reminder-list" id="reminderList"></div>
+            <button class="btn-ghost reminder-add" id="addReminderTime" type="button">添加时间</button>
+          </article>
+
+          <article class="card detail-action-card">
+            <a class="btn-primary" href="./medication-stock-alert.html" id="timeNext">下一步</a>
+          </article>
+        </div>
+
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const preset = params.get("preset") || "once";
+      const unit = (params.get("unit") || "药片").trim() || "药片";
+      const queryString = params.toString();
+      const list = document.getElementById("reminderList");
+      const addButton = document.getElementById("addReminderTime");
+      const next = document.getElementById("timeNext");
+      const back = document.getElementById("timeBack");
+      const map = {
+        once: ["08:00"],
+        twice: ["08:00", "20:00"],
+        interval: ["06:00", "12:00", "18:00"],
+        multiple: ["08:00", "14:00", "20:00"],
+        weekly: ["08:00"],
+        cycle: ["09:00"],
+      };
+
+      const renderRow = (timeValue, qtyValue = "1") => {
+        if (!list) return;
+        const row = document.createElement("div");
+        row.className = "reminder-row";
+        row.innerHTML = `
+          <input class="reminder-time" type="time" value="${timeValue}" />
+          <div class="reminder-dose">
+            <input class="reminder-qty" type="number" min="1" step="1" value="${qtyValue}" />
+            <span>${unit}</span>
+          </div>
+        `;
+        list.appendChild(row);
+      };
+
+      if (list) {
+        list.innerHTML = "";
+        const times = map[preset] || map.once;
+        times.forEach((time) => renderRow(time, "1"));
+      }
+
+      addButton?.addEventListener("click", () => {
+        renderRow("21:00", "1");
+      });
+
+      if (back) {
+        if (preset === "interval" || preset === "multiple" || preset === "weekly" || preset === "cycle") {
+          back.href = queryString ? `./medication-frequency-advanced.html?${queryString}` : "./medication-frequency-advanced.html";
+        } else {
+          back.href = queryString ? `./medication-frequency.html?${queryString}` : "./medication-frequency.html";
+        }
+      }
+
+      if (next) {
+        next.href = queryString ? `./medication-stock-alert.html?${queryString}` : "./medication-stock-alert.html";
+      }
+    });
+  </script>
+</body>
+</html>

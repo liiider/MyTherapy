@@ -316,6 +316,10 @@ export function taskAction(state, taskId, action, actualAt = nowLocal(), payload
   const plannedAt = task.scheduledAt;
   const normalizedActualAt = requireDateTime(actualAt, "actualAt");
 
+  if (task.status === "done" || task.status === "skipped" || task.status === "backfilled") {
+    throw validationError("task", "Task is already resolved.");
+  }
+
   if (action === "delayed") {
     const minutes = Number(payload.minutes ?? 30);
     if (!Number.isFinite(minutes) || minutes <= 0 || minutes > 240) {
@@ -418,7 +422,7 @@ export function createExportReport(state, createdAt = nowLocal()) {
   const report = {
     id: createId("REPORT"),
     type: "follow_up",
-    dateRange: "last_30_days",
+    dateRange: "all_records",
     includedSections: ["rules", "tasks", "records", "inventory", "risks"],
     generatedFrom: "records_and_rule_snapshot",
     createdAt,
@@ -589,16 +593,42 @@ function requireText(value, field) {
 
 function requireTime(value, field) {
   const text = requireText(value, field);
-  if (!/^\d{2}:\d{2}$/.test(text)) {
-    throw validationError(field, `${field} must use HH:mm.`);
+  const match = text.match(/^(\d{2}):(\d{2})$/);
+  if (!match) {
+    throw validationError(field, `${field} must use valid HH:mm.`);
+  }
+
+  const hour = Number(match[1]);
+  const minute = Number(match[2]);
+  if (hour > 23 || minute > 59) {
+    throw validationError(field, `${field} must use a valid HH:mm.`);
   }
   return text;
 }
 
 function requireDateTime(value, field) {
   const text = requireText(value, field);
-  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(text)) {
-    throw validationError(field, `${field} must use YYYY-MM-DDTHH:mm.`);
+  const match = text.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/);
+  if (!match) {
+    throw validationError(field, `${field} must use valid YYYY-MM-DDTHH:mm.`);
+  }
+
+  const [, yearText, monthText, dayText, hourText, minuteText] = match;
+  const year = Number(yearText);
+  const month = Number(monthText);
+  const day = Number(dayText);
+  const hour = Number(hourText);
+  const minute = Number(minuteText);
+  const parsed = new Date(year, month - 1, day, hour, minute);
+
+  if (
+    parsed.getFullYear() !== year ||
+    parsed.getMonth() !== month - 1 ||
+    parsed.getDate() !== day ||
+    parsed.getHours() !== hour ||
+    parsed.getMinutes() !== minute
+  ) {
+    throw validationError(field, `${field} must use a valid YYYY-MM-DDTHH:mm.`);
   }
   return text;
 }

@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node server/index.js",
     "test": "node test/domain.test.js",
-    "check": "node scripts/check.mjs"
+    "check": "node scripts/check.mjs",
+    "mobile:verify": "node scripts/verify-mobile.mjs",
+    "verify": "node scripts/check.mjs && node test/domain.test.js && node scripts/verify.mjs && node scripts/verify-mobile.mjs"
   }
 }

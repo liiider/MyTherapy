@@ -1,0 +1,18 @@
+{
+  "name": "MyTherapy",
+  "appid": "__UNI__MYTHERAPY",
+  "description": "患者侧 AI 用药记录和提醒工具",
+  "versionName": "0.1.0",
+  "versionCode": "1",
+  "transformPx": false,
+  "app-plus": {
+    "distribute": {
+      "ios": {
+        "privacyDescription": {
+          "NSCameraUsageDescription": "用于拍摄处方或医嘱图片，并生成待确认的用药计划。",
+          "NSPhotoLibraryUsageDescription": "用于选择处方或医嘱图片，并生成待确认的用药计划。"
+        }
+      }
+    }
+  }
+}

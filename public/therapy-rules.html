@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy 原型 v2 - 我的疗程</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="me">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar">
+            <div><h3>我的疗程</h3><p>规则管理</p></div>
+            <div class="icon-row"><a class="icon-chip" href="./ai.html"><svg class="ico"><use href="#i-plus"></use></svg></a></div>
+          </div>
+        </div>
+        <div class="content">
+          <article class="group-card">
+            <div class="group-head"><div class="group-inline"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><strong>药物</strong></div><span class="mini-chip">2 条</span></div>
+            <a class="task-row task-row-link" href="./ocr-review.html"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>补剂</strong><div class="task-meta"><span class="mini-chip">08:30</span><span class="mini-chip">OCR</span><span class="mini-chip">启用中</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></a>
+            <div class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span><div class="task-copy"><strong>备用胃药</strong><div class="task-meta"><span class="mini-chip">按需</span><span class="mini-chip">暂停</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></div>
+          </article>
+          <article class="group-card">
+            <div class="group-head"><div class="group-inline"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-measure"></use></svg></span><strong>测量</strong></div><span class="mini-chip">1 条</span></div>
+            <div class="task-row"><span class="ico-badge soft-green"><svg class="ico"><use href="#i-measure"></use></svg></span><div class="task-copy"><strong>晚间体重</strong><div class="task-meta"><span class="mini-chip">21:30</span><span class="mini-chip">启用中</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></div>
+          </article>
+          <article class="group-card">
+            <div class="group-head"><div class="group-inline"><span class="ico-badge"><svg class="ico"><use href="#i-activity"></use></svg></span><strong>活动</strong></div><span class="mini-chip">1 条</span></div>
+            <div class="task-row"><span class="ico-badge"><svg class="ico"><use href="#i-activity"></use></svg></span><div class="task-copy"><strong>晨间散步</strong><div class="task-meta"><span class="mini-chip">07:10</span><span class="mini-chip">今日沉淀</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></div>
+          </article>
+          <article class="group-card">
+            <div class="group-head"><div class="group-inline"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span><strong>情绪和症状</strong></div><span class="mini-chip">2 条</span></div>
+            <div class="task-row"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span><div class="task-copy"><strong>午间情绪</strong><div class="task-meta"><span class="mini-chip">12:30</span><span class="mini-chip">AI</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></div>
+            <div class="task-row"><span class="ico-badge soft-gold"><svg class="ico"><use href="#i-spark"></use></svg></span><div class="task-copy"><strong>晚间副作用</strong><div class="task-meta"><span class="mini-chip">20:00</span><span class="mini-chip">AI</span></div></div><svg class="ico"><use href="#i-chevron"></use></svg></div>
+          </article>
+        </div>
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const from = params.get("from");
+      
+      if (from === "long-med" || from === "ocr") {
+        const name = (params.get("name") || "新药物").trim();
+        const content = document.querySelector(".content");
+        const medGroup = document.querySelector(".group-card"); // First group is medication
+        
+        if (content) {
+          const notice = document.createElement("article");
+          notice.className = "outline-note today-inline-notice";
+          notice.style.marginBottom = "12px";
+          notice.textContent = from === "ocr" ? `OCR 导入成功：${name}` : `已成功添加长期药物规划：${name}`;
+          content.insertBefore(notice, content.firstElementChild);
+        }
+        
+        if (medGroup) {
+          const row = document.createElement("div");
+          row.className = "task-row";
+          
+          let freqText = "每天一次";
+          let sourceText = "手动添加";
+          
+          if (from === "long-med") {
+            const preset = params.get("preset") || "once";
+            const plan = params.get("plan") || "regular";
+            if (preset === "twice") freqText = "一天两次";
+            if (preset === "more") freqText = "自定义频率";
+            if (plan === "prn") freqText = "按需";
+          } else if (from === "ocr") {
+            freqText = params.get("freq") || "每天1次";
+            const time = params.get("time") || "08:30";
+            freqText = `${freqText} · ${time}`;
+            sourceText = "OCR导入";
+          }
+          
+          row.innerHTML = `
+            <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
+            <div class="task-copy">
+              <strong>${name}</strong>
+              <div class="task-meta">
+                <span class="mini-chip">${freqText}</span>
+                <span class="mini-chip">${sourceText}</span>
+                <span class="mini-chip">启用中</span>
+              </div>
+            </div>
+            <svg class="ico"><use href="#i-chevron"></use></svg>
+          `;
+          
+          const groupHead = medGroup.querySelector(".group-head");
+          if (groupHead) {
+            groupHead.insertAdjacentElement("afterend", row);
+            
+            const countChip = groupHead.querySelector(".mini-chip");
+            if (countChip) {
+              const currentCount = parseInt(countChip.textContent) || 0;
+              countChip.textContent = `${currentCount + 1} 条`;
+            }
+          }
+        }
+        
+        const cleanURL = `${window.location.pathname}${window.location.hash || ""}`;
+        window.history.replaceState({}, "", cleanURL);
+      }
+    });
+  </script>
+</body>
+</html>

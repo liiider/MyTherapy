@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import { analyzeInput } from "../server/aiMock.js";
 import {
   addOneOffTask,
   addSymptomRecord,
@@ -43,6 +44,22 @@ test("completing a medication task writes a record and decrements inventory", ()
   assert.equal(medicationTask.status, "done");
   assert.equal(rule.inventory.amount, 3);
   assert.ok(state.records.some((record) => record.taskId === medicationTask.id && record.action === "done"));
+});
+
+test("resolved medication tasks cannot be completed twice", () => {
+  const state = createSeedState("2026-04-24");
+  ensureTasksForDate(state, "2026-04-24");
+
+  const medicationTask = state.tasks.find((task) => task.title === "补剂");
+  const rule = state.rules.find((item) => item.id === medicationTask.ruleId);
+
+  taskAction(state, medicationTask.id, "done", "2026-04-24T08:40");
+  const inventoryAfterFirstDone = rule.inventory.amount;
+  const recordCountAfterFirstDone = state.records.length;
+
+  assert.throws(() => taskAction(state, medicationTask.id, "done", "2026-04-24T08:45"), /Task is already resolved/);
+  assert.equal(rule.inventory.amount, inventoryAfterFirstDone);
+  assert.equal(state.records.length, recordCountAfterFirstDone);
 });
 
 test("delaying a task does not duplicate the same rule task", () => {
@@ -112,6 +129,7 @@ test("export report is generated from records and a rule snapshot", () => {
 
   assert.equal(report.records.length, state.records.length);
   assert.equal(report.rules.length, state.rules.length);
+  assert.equal(report.dateRange, "all_records");
   assert.ok(state.reports.some((item) => item.id === report.id));
 });
 
@@ -176,3 +194,154 @@ test("manual entry can create long-term rules, one-off tasks, and direct records
   assert.equal(record.sourcePage, "manual-entry");
   assert.equal(record.value, "128/82");
 });
+
+test("manual medication rules persist initial inventory inputs", () => {
+  const state = createSeedState("2026-04-24");
+  const rule = createManualRule(state, {
+    type: "medication",
+    title: "库存药",
+    time: "10:00",
+    instruction: "饭后服用",
+    inventory: { amount: 20, threshold: 5, unit: "片" },
+  });
+
+  assert.deepEqual(rule.inventory, { amount: 20, threshold: 5, unit: "片" });
+});
+
+test("domain validation rejects impossible times at input boundaries", () => {
+  const state = createSeedState("2026-04-24");
+  const rule = state.rules.find((item) => item.title === "补剂");
+
+  assert.throws(
+    () =>
+      createManualRule(state, {
+        type: "medication",
+        title: "晚间用药",
+        time: "25:99",
+        instruction: "饭后服用",
+      }),
+    /time must use a valid HH:mm/,
+  );
+
+  assert.throws(
+    () =>
+      createManualTask(state, {
+        type: "reminder",
+        title: "无效任务",
+        scheduledAt: "2026-04-24T24:00",
+        instruction: "测试",
+      }),
+    /scheduledAt must use a valid YYYY-MM-DDTHH:mm/,
+  );
+
+  assert.throws(() => updateRule(state, rule.id, { time: "12:60" }), /time must use a valid HH:mm/);
+});
+
+test("AI analysis rejects empty user input before generating suggestions", () => {
+  assert.throws(() => analyzeInput({ text: "   " }), /text is required/);
+  assert.throws(() => analyzeInput({ text: "医嘱".repeat(501) }), /text is too long/);
+});
+
+test("AI analysis does not invent medication rules without medication and dose signals", () => {
+  const suggestion = analyzeInput({ text: "我今天只是头痛，没有任何医生开的药，也没有剂量。" });
+
+  assert.equal(suggestion.ruleSuggestions.some((item) => item.type === "medication"), false);
+  assert.equal(suggestion.oneOffTasks.length, 0);
+  assert.equal(suggestion.recordSuggestions.length, 1);
+});
+
+test("Zhipu text analysis sends the user's input to the model", async () => {
+  const originalKey = process.env.ZHIPUAI_API_KEY;
+  const originalFetch = globalThis.fetch;
+  const requests = [];
+
+  process.env.ZHIPUAI_API_KEY = "test-key";
+  globalThis.fetch = async (_url, options) => {
+    requests.push(JSON.parse(options.body));
+    return jsonResponse({
+      choices: [
+        {
+          message: {
+            content: JSON.stringify({
+              ruleSuggestions: [],
+              oneOffTasks: [],
+              recordSuggestions: [],
+              disclaimer: "test",
+            }),
+          },
+        },
+      ],
+    });
+  };
+
+  try {
+    const { analyzeInput: analyzeZhipuInput } = await import(`../server/aiService.js?case=text-${Date.now()}`);
+    await analyzeZhipuInput({ text: "Take aspirin 100mg after breakfast." });
+  } finally {
+    restoreEnv("ZHIPUAI_API_KEY", originalKey);
+    globalThis.fetch = originalFetch;
+  }
+
+  assert.equal(requests.length, 1);
+  const messages = JSON.stringify(requests[0].messages);
+  assert.match(messages, /Take aspirin 100mg after breakfast\./);
+  assert.doesNotMatch(messages, /\{text\}/);
+});
+
+test("Zhipu OCR extraction sends supplemental text to the model", async () => {
+  const originalKey = process.env.ZHIPUAI_API_KEY;
+  const originalFetch = globalThis.fetch;
+  const requests = [];
+
+  process.env.ZHIPUAI_API_KEY = "test-key";
+  globalThis.fetch = async (_url, options) => {
+    requests.push(JSON.parse(options.body));
+    return jsonResponse({
+      choices: [
+        {
+          message: {
+            content: JSON.stringify({
+              title: "Aspirin",
+              dose: "100mg",
+              frequency: "daily",
+              time: "08:30",
+              instruction: "After breakfast",
+              notes: "test",
+              confidenceFlags: [],
+            }),
+          },
+        },
+      ],
+    });
+  };
+
+  try {
+    const { extractOcrDraft: extractZhipuOcrDraft } = await import(`../server/aiService.js?case=ocr-${Date.now()}`);
+    await extractZhipuOcrDraft({ text: "Prescription text from OCR." });
+  } finally {
+    restoreEnv("ZHIPUAI_API_KEY", originalKey);
+    globalThis.fetch = originalFetch;
+  }
+
+  assert.equal(requests.length, 1);
+  const messages = JSON.stringify(requests[0].messages);
+  assert.match(messages, /Prescription text from OCR\./);
+  assert.doesNotMatch(messages, /\{String\(input\.text\)\.slice\(0, 1000\)\}/);
+});
+
+function jsonResponse(body) {
+  return {
+    ok: true,
+    async json() {
+      return body;
+    },
+  };
+}
+
+function restoreEnv(name, value) {
+  if (value === undefined) {
+    delete process.env[name];
+    return;
+  }
+  process.env[name] = value;
+}

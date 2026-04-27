@@ -4,13 +4,27 @@ Patient-side AI medication management product.
 
 ## MVP App
 
-This repository now includes a dependency-free local full-stack MVP.
+This repository now serves the mobile-app static prototype from `public/`. The Node backend and domain tests remain available for API/business-logic validation, but the primary browser entry is intentionally the phone-frame APP prototype, not a desktop web console.
 
 Run:
 
 ```powershell
 npm.cmd start
 ```
+
+Use real Zhipu AI models instead of local mock:
+
+```powershell
+$env:ZHIPUAI_API_KEY="your-api-key"
+$env:ZHIPU_TEXT_MODEL="glm-5"
+$env:ZHIPU_VISION_MODEL="glm-4.5v"
+$env:ZHIPU_TIMEOUT_MS="20000"
+npm.cmd start
+```
+
+Do not commit API keys. `BIGMODEL_API_KEY` is also accepted as an alias. If no key is set, the app falls back to the local mock AI/OCR service. `ZHIPU_BASE_URL` can override the OpenAI-compatible endpoint for local proxy testing.
+
+The backend OCR endpoint accepts either an `imageUrl` or pasted prescription text. If both are empty, it intentionally returns the mock draft so the demo remains usable offline. The current `public/` APP prototype is static; wiring those screens to the backend should be done as a separate mobile-app integration step.
 
 Open:
 
@@ -27,7 +41,8 @@ node test\domain.test.js
 
 Notes:
 
-- AI and OCR are mocked in `server/aiMock.js`.
+- `public/` is the restored static mobile APP prototype.
+- AI and OCR fall back to `server/aiMock.js` when no Zhipu API key is configured.
 - Backend APIs are implemented with Node's built-in HTTP server.
 - Local state is persisted to `data/app-state.json` at runtime.
 - The app is a product MVP scaffold, not yet an App Store-ready iOS build.

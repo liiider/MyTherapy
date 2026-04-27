@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTherapy 原型 v2 - 今日</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="today">
+  <main class="prototype-shell">
+    <section class="phone">
+      <div class="screen">
+        <div>
+          <div class="status"><span>9:41</span><span>5G · 76%</span></div>
+          <div class="appbar today-appbar">
+            <div><h3>今日</h3></div>
+            <div class="icon-row">
+              <button class="icon-chip message-trigger js-open-message" type="button" aria-label="风险消息">
+                <svg class="ico"><use href="#i-bell"></use></svg>
+                <span class="message-dot"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="content today-content">
+          <button class="card today-date-card js-open-month" type="button" aria-label="打开月历">
+            <div class="today-date-head"><span>3月30日</span><span>周一</span></div>
+            <div class="week-grid">
+              <div class="day-chip"><span>五</span><strong>28</strong><span class="dot"></span></div>
+              <div class="day-chip"><span>六</span><strong>29</strong><span class="dot"></span></div>
+              <div class="day-chip current"><span>今</span><strong>30</strong><span class="dot"></span></div>
+              <div class="day-chip"><span>二</span><strong>31</strong><span class="dot"></span></div>
+              <div class="day-chip"><span>三</span><strong>1</strong><span class="dot"></span></div>
+              <div class="day-chip"><span>四</span><strong>2</strong><span class="dot"></span></div>
+              <div class="day-chip"><span>五</span><strong>3</strong><span class="dot"></span></div>
+            </div>
+          </button>
+
+          <div class="today-section-title today-section-title-primary"><span>待完成</span><span id="todayPendingCount">4</span></div>
+
+          <div class="task-row today-line-card is-overdue" id="todaySupplementRow">
+            <a href="./task-detail.html" style="display: contents; color: inherit;">
+              <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
+              <div class="task-copy">
+                <strong>补剂</strong>
+                <div class="task-meta task-meta-plain">
+                  <span>1 药片</span>
+                  <span class="meta-sep">·</span>
+                  <span>饭后</span>
+                  <span class="overdue-tag">逾期</span>
+                </div>
+              </div>
+            </a>
+            <div class="today-line-side">
+              <span class="today-line-time">08:30</span>
+              <button class="task-check js-quick-complete" data-name="补剂" aria-label="完成">
+                <svg class="ico"><use href="#i-check"></use></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="task-row today-line-card">
+            <a href="./task-detail.html" style="display: contents; color: inherit;">
+              <span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span>
+              <div class="task-copy">
+                <strong>午间情绪</strong>
+                <div class="task-meta task-meta-plain"><span>自查</span><span class="meta-sep">·</span><span>1 分钟</span></div>
+              </div>
+            </a>
+            <div class="today-line-side">
+              <span class="today-line-time">13:00</span>
+              <button class="task-check js-quick-complete" data-name="午间情绪" aria-label="完成">
+                <svg class="ico"><use href="#i-check"></use></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="task-row today-line-card">
+            <a href="./task-detail.html" style="display: contents; color: inherit;">
+              <span class="ico-badge soft-gold"><svg class="ico"><use href="#i-spark"></use></svg></span>
+              <div class="task-copy">
+                <strong>副作用自查</strong>
+                <div class="task-meta task-meta-plain"><span>恶心、胃痛</span></div>
+              </div>
+            </a>
+            <div class="today-line-side">
+              <span class="today-line-time">20:00</span>
+              <button class="task-check js-quick-complete" data-name="副作用自查" aria-label="完成">
+                <svg class="ico"><use href="#i-check"></use></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="task-row today-line-card">
+            <a href="./task-detail.html" style="display: contents; color: inherit;">
+              <span class="ico-badge soft-green"><svg class="ico"><use href="#i-measure"></use></svg></span>
+              <div class="task-copy">
+                <strong>睡前体重</strong>
+                <div class="task-meta task-meta-plain"><span>测量</span><span class="meta-sep">·</span><span>同步进展</span></div>
+              </div>
+            </a>
+            <div class="today-line-side">
+              <span class="today-line-time">21:30</span>
+              <button class="task-check js-quick-complete" data-name="睡前体重" aria-label="完成">
+                <svg class="ico"><use href="#i-check"></use></svg>
+              </button>
+            </div>
+          </div>
+
+          <details class="card today-completed-card" id="completed">
+            <summary>
+              <div class="today-section-title today-section-title-secondary"><span>已完成</span><span>1 项</span></div>
+            </summary>
+            <div class="today-completed-list">
+              <a class="task-row task-row-link today-line-card is-completed" href="./task-detail.html">
+                <span class="ico-badge soft-green"><svg class="ico"><use href="#i-activity"></use></svg></span>
+                <div class="task-copy">
+                  <strong>晨间散步</strong>
+                  <div class="task-meta"><span class="mini-chip">10 分钟</span><span class="today-note-mark" aria-label="有备注"><svg class="ico"><use href="#i-note"></use></svg></span></div>
+                </div>
+                <div class="today-line-side"><span class="today-line-status is-completed">已完成</span><span class="today-line-time">07:16</span></div>
+              </a>
+            </div>
+          </details>
+        </div>
+
+        <button class="floating-add js-open-quick-add" type="button" aria-label="新增">
+          <svg class="ico"><use href="#i-plus"></use></svg>
+        </button>
+
+        <div class="bottom-nav">
+          <div class="bottom-nav-inner">
+            <a class="tab" data-nav-page="today" href="./today.html"><svg class="tab-ico"><use href="#i-calendar"></use></svg><span>今日</span></a>
+            <a class="tab" data-nav-page="progress" href="./progress.html"><svg class="tab-ico"><use href="#i-chart"></use></svg><span>进展</span></a>
+            <a class="tab" data-nav-page="ai" href="./ai.html"><svg class="tab-ico"><use href="#i-spark"></use></svg><span>AI</span></a>
+            <a class="tab" data-nav-page="me" href="./my.html"><svg class="tab-ico"><use href="#i-user"></use></svg><span>我的</span></a>
+          </div>
+        </div>
+
+        <div class="month-sheet" id="monthSheet">
+          <div class="sheet-card">
+            <div class="sheet-handle"></div>
+            <div class="row">
+              <strong style="font-size:19px;">2026 年 3 月</strong>
+              <button class="btn-ghost" id="closeMonthSheet" type="button">关闭</button>
+            </div>
+            <div class="month-grid">
+              <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span>
+              <div class="month-cell">23</div><div class="month-cell">24</div><div class="month-cell">25</div><div class="month-cell">26</div><div class="month-cell">27</div><div class="month-cell">28</div><div class="month-cell">1</div>
+              <div class="month-cell">2</div><div class="month-cell">3</div><div class="month-cell">4</div><div class="month-cell">5</div><div class="month-cell">6</div><div class="month-cell">7</div><div class="month-cell">8</div>
+              <div class="month-cell">9</div><div class="month-cell">10</div><div class="month-cell">11</div><div class="month-cell">12</div><div class="month-cell">13</div><div class="month-cell">14</div><div class="month-cell">15</div>
+              <div class="month-cell">16</div><div class="month-cell">17</div><div class="month-cell">18</div><div class="month-cell">19</div><div class="month-cell">20</div><div class="month-cell">21</div><div class="month-cell">22</div>
+              <div class="month-cell">23</div><div class="month-cell">24</div><div class="month-cell">25</div><div class="month-cell">26</div><div class="month-cell">27</div><div class="month-cell">28</div><div class="month-cell">29</div>
+              <div class="month-cell current">30</div><div class="month-cell">31</div><div class="month-cell">1</div><div class="month-cell">2</div><div class="month-cell">3</div><div class="month-cell">4</div><div class="month-cell">5</div><div class="month-cell">6</div>
+            </div>
+            <div class="outline-note">点击日期后回到当日任务视图。</div>
+          </div>
+        </div>
+
+        <div class="month-sheet message-sheet" id="messageSheet">
+          <div class="sheet-card">
+            <div class="sheet-handle"></div>
+            <div class="row">
+              <strong style="font-size:19px;">风险提醒</strong>
+              <button class="btn-ghost" id="closeMessageSheet" type="button">关闭</button>
+            </div>
+            <div class="message-list">
+              <article class="card message-card">
+                <div class="group-inline">
+                  <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
+                  <div>
+                    <strong>补剂库存偏低</strong>
+                    <p class="subcopy">还剩 4 片，建议尽快补充。</p>
+                  </div>
+                </div>
+                <a class="btn-ghost" href="./therapy-rules.html">去处理</a>
+              </article>
+              <article class="card message-card">
+                <div class="group-inline">
+                  <span class="ico-badge soft-gold"><svg class="ico"><use href="#i-camera"></use></svg></span>
+                  <div>
+                    <strong>OCR 结果待确认</strong>
+                    <p class="subcopy">“每天 1 次” 识别置信度较低，建议核对。</p>
+                  </div>
+                </div>
+                <a class="btn-ghost" href="./ocr-review.html">去处理</a>
+              </article>
+            </div>
+          </div>
+        </div>
+        <div class="month-sheet quick-add-sheet" id="quickAddSheet">
+          <div class="sheet-card">
+            <div class="sheet-handle"></div>
+
+            <div class="quick-add-step active" id="quickAddModeStep" aria-label="新增类型">
+              <div class="quick-add-step-head quick-add-intro-head">
+                <h4 class="quick-add-intro-title">添加内容</h4>
+              </div>
+              <div class="quick-add-mode-list" role="list">
+                <button class="quick-add-mode-item" type="button" data-add-mode="once" role="listitem">
+                  <span class="ico-badge soft-gold"><svg class="ico"><use href="#i-check"></use></svg></span>
+                  <strong>单次记录</strong>
+                </button>
+                <button class="quick-add-mode-item" type="button" data-add-mode="long" role="listitem">
+                  <span class="ico-badge"><svg class="ico"><use href="#i-clock"></use></svg></span>
+                  <strong>长期规划</strong>
+                </button>
+              </div>
+            </div>
+
+            <div class="quick-add-step" id="quickAddCategoryStep" aria-label="手动新增类别">
+              <div class="quick-add-step-head">
+                <h4 class="quick-add-mode-title" id="quickAddModeChip">单次记录</h4>
+              </div>
+              <div class="quick-add-sheet-list" role="list">
+                <button class="quick-add-sheet-item" type="button" data-add-category="medication" role="listitem">
+                  <span class="ico-badge"><svg class="ico"><use href="#i-pill"></use></svg></span>
+                  <strong>药物</strong>
+                </button>
+                <button class="quick-add-sheet-item" type="button" data-add-category="measure" role="listitem">
+                  <span class="ico-badge soft-green"><svg class="ico"><use href="#i-measure"></use></svg></span>
+                  <strong>测量</strong>
+                </button>
+                <button class="quick-add-sheet-item" type="button" data-add-category="activity" role="listitem">
+                  <span class="ico-badge"><svg class="ico"><use href="#i-activity"></use></svg></span>
+                  <strong>活动</strong>
+                </button>
+                <button class="quick-add-sheet-item" type="button" data-add-category="mood-symptom" role="listitem">
+                  <span class="ico-badge soft-gold"><svg class="ico"><use href="#i-mood"></use></svg></span>
+                  <strong>情绪和症状</strong>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>
+
+
